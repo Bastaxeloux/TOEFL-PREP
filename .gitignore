@@ -41,3 +41,7 @@ temp_recording.*
 # Environment variables
 .env
 .env.local
+
+# User data files
+# prompts.txt
+vocabulary_cards.json

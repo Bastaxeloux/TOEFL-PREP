@@ -1,68 +1,61 @@
 # TOEFL Independent Speaking Question Practice Tool
 
-Un outil web pour pratiquer les questions de speaking indépendant du TOEFL avec enregistrement audio, transcription automatique et analyse.
+Un outil web pour pratiquer les questions de speaking indépendant du TOEFL avec enregistrement audio, transcription automatique, analyse IA et fiches de vocabulaire.
 
 Adaptation par Maël Le Guillouzic d'un projet de Lennart Rikk.
 Disponible pour usage personnel et éducatif uniquement.
 
-Si vous avez d'autres soucis que ceux énoncés dans ce README : debrouillez vous, Chat GPT sera bien meilleur que nous tous.
+Si vous avez d'autres soucis que ceux énoncés dans ce README : débrouillez-vous, ChatGPT sera bien meilleur que nous tous.
 
 ---
 
 ## Fonctionnalités
 
-- Interface web locale
-- Enregistrement audio de vos réponses
+- Interface web LOCALE !
 - Transcription automatique avec Whisper (OpenAI)
+- **Feedback IA détaillé** avec GPT-4o-mini (devrait pas etre trop couteux, j'ai fait 4 test ca ma couté 1 centime)
+  - Évaluation sur l'échelle TOEFL (0-4)
+  - Suggestions de vocabulaire avancé, et vous pouvez l'enregistrer comme une petite fiche ! (Avec recommandations de reformulation)
+- Sélection aléatoire de X questions parmi votre collection
 - Timers de préparation (15s) et de réponse (45s)
 - Comptage de mots et calcul du débit de parole
 - Sauvegarde des questions personnalisées
 
 ---
 
-## Utilisation
+## Installation
 
-1. **Page d'accueil** :
-   - Modifiez les questions dans le textarea
-   - Cliquez sur **"Save Prompts"** pour sauvegarder vos modifications
-   - Cliquez sur **"Start Practice"** pour commencer
+### Prérequis
 
-2. **Pendant l'exercice** :
-   - Écoutez la question lue automatiquement
-   - **15 secondes** de préparation (un bip annonce le début)
-   - **45 secondes** de réponse (enregistrement automatique)
-   - Consultez la transcription et vos statistiques
-   - Téléchargez l'enregistrement MP3
+- Python 3.8+
+- FFmpeg (pour la conversion audio)
+- (Optionnel) Clé API OpenAI pour le feedback IA
 
-3. **Navigation** :
-   - **Next/Previous** : Passer entre les questions
-   - **Restart** : Recommencer la question actuelle
-   - **Reset** : Retourner à l'écran d'accueil
-
----
-
-## Installation Manuelle
+### Installation manuelle
 
 ```bash
+git clone https://github.com/VOTRE-USERNAME/toefl-speaking-practice.git
+cd toefl-speaking-practice
+
+# Gérer votre venv favori
 python -m venv venv
+
+# Pour activer l'environnement
 # Windows:
 venv\Scripts\activate
 # macOS/Linux:
 source venv/bin/activate
+
+# Vous pouvez tout installer avec
 pip install -r requirements.txt
+
+# Lancer l'application
 python app.py
 ```
 
----
+L'application sera accessible sur http://localhost:5001
 
-## Dépannage
-
-### Le microphone ne fonctionne pas
-- Vérifiez que votre navigateur a l'autorisation d'accéder au microphone
-- Sur Chrome/Firefox, acceptez la demande d'autorisation qui apparaît
-
-### FFmpeg n'est pas trouvé
-L'application détecte automatiquement FFmpeg et affiche des instructions si non trouvé :
+### Installation de FFmpeg
 
 **macOS** :
 ```bash
@@ -80,8 +73,60 @@ sudo apt-get install ffmpeg
 - Ajoutez `C:\ffmpeg\bin` au PATH
 - Ou utilisez Chocolatey : `choco install ffmpeg`
 
+---
+
+## Utilisation
+
+### 1. Configuration initiale
+
+Sur la page d'accueil :
+- Modifiez les questions dans la zone dédiée (une question par ligne)
+- Cliquez sur **"Save Prompts"** pour sauvegarder. C'est save sur votre PC.
+
+### 2. Pendant l'exercice
+
+1. Écoutez la question lue automatiquement (ou cliquez "Skip to Practice")
+2. **15 secondes** de préparation (un bip annonce le début de l'enregistrement)
+3. **45 secondes** de réponse (enregistrement automatique)
+4. Consultez la transcription et vos statistiques
+5. Si vous avez une clé API, recevez un feedback IA détaillé
+6. Téléchargez l'enregistrement MP3 si nécessaire
+
+### 3. Navigation
+
+- **Next/Previous** : Passer entre les questions
+- **Restart** : Recommencer la question actuelle
+- **Reset** : Retourner à l'écran d'accueil
+
+### 4. Fiches de vocabulaire
+
+- Pendant l'exercice, cliquez sur **"Save to Vocabulary Flashcards"** dans la section vocabulaire du feedback
+- Accédez à vos fiches via **"View My Vocabulary Flashcards"** sur la page d'accueil
+- Les fiches sont sauvegardées dans `vocabulary_cards.json` et accessibles depuis n'importe quel navigateur.
+
+---
+
+## Obtenir une clé API OpenAI
+
+1. Créez un compte sur https://platform.openai.com
+2. Allez dans "API Keys" : https://platform.openai.com/api-keys
+3. Cliquez sur "Create new secret key"
+4. Copiez la clé (elle commence par `sk-...`)
+5. Collez-la dans le champ "OpenAI API Key" sur la page d'accueil.
+
+---
+
+## Dépannage
+
+### Le microphone ne fonctionne pas
+- Vérifiez que votre navigateur a l'autorisation d'accéder au microphone
+- Sur Chrome/Firefox, acceptez la demande d'autorisation qui apparaît
+
+### FFmpeg n'est pas trouvé
+L'application détecte automatiquement FFmpeg et affiche des instructions si non trouvé. Suivez les instructions d'installation ci-dessus.
+
 ### Le modèle Whisper est lent
-- Premier chargement : 1-2 minutes (téléchargement du modèle)
+- Premier chargement : 1-2 minutes (téléchargement du modèle "base")
 - Transcription : 10-30 secondes selon votre CPU
 - Pour de meilleures performances, utilisez un GPU (nécessite CUDA)
 
@@ -90,19 +135,16 @@ sudo apt-get install ffmpeg
 - Fermez d'autres applications si nécessaire
 
 ### Le port 5001 est déjà utilisé
-- Modifiez le port dans `app.py` (ligne 179) : `port=5001` => `port=5002`
+- Modifiez le port dans `app.py` (dernière ligne) : `port=5001` => `port=5002`
+
+### Le feedback IA ne s'affiche pas
+- Vérifiez que vous avez entré une clé API OpenAI valide
+- Vérifiez votre connexion internet
+- Consultez la console du terminal pour voir les erreurs
 
 ---
 
-### Sauvegarder vos questions
-
-1. Collez vos nouvelles questions dans le textarea de la page d'accueil
-2. Cliquez sur **"Save Prompts"**
-3. Elles seront automatiquement rechargées au prochain démarrage
-
----
-
-## Contribuer ?
+## Contribuer
 
 Si vous rencontrez un bug :
 
@@ -145,9 +187,17 @@ Si vous souhaitez contribuer du code :
 
 Toutes les contributions seront créditées dans le README.
 
+---
+
 ## Licence
 
-Cet outil est disponible pour **usage personnel et éducatif uniquement** L'usage commercial est strictement interdit. Vous pouvez modifier le code pour votre usage personnel
+Cet outil est disponible pour **usage personnel et éducatif uniquement**. L'usage commercial est strictement interdit. Vous pouvez modifier le code pour votre usage personnel.
+
+---
+
+## Crédits
+
+- Idée originale : Lennart Rikk
 
 ---
 
@@ -156,6 +206,7 @@ Cet outil est disponible pour **usage personnel et éducatif uniquement** L'usag
 - [TOEFL Official Website](https://www.ets.org/toefl)
 - [OpenAI Whisper](https://github.com/openai/whisper)
 - [Flask Documentation](https://flask.palletsprojects.com/)
+- [OpenAI Platform](https://platform.openai.com/)
 
 ---
 
