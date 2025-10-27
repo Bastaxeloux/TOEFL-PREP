@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEFL Speaking Practice</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="app" class="toefl-container">
+        <!-- Input Screen -->
+        <div id="inputScreen" class="screen">
+            <h1 class="toefl-header">TOEFL Independent Speaking Practice Tool</h1>
+            <p class="toefl-instructions">
+                Enter your prompts below, separated by linebreak.<br>
+                NB! You can easily generate more prompts by using some large language model and then enter them here!
+            </p>
+
+            <div class="vocabulary-link">
+                <a href="/vocabulary" class="btn btn-primary">View My Vocabulary Flashcards</a>
+            </div>
+
+            <textarea id="promptInput" rows="6" cols="80">{{ default_prompts }}</textarea>
+
+            <div class="config-section">
+                <div class="config-item">
+                    <label for="numPrompts">Number of random questions to practice:</label>
+                    <input type="number" id="numPrompts" min="1" max="50" value="5">
+                    <span class="config-hint">(Total available: <span id="totalPrompts">0</span>)</span>
+                </div>
+
+                <div class="config-item">
+                    <label for="apiKey">OpenAI API Key (optional):</label>
+                    <input type="password" id="apiKey" placeholder="sk-...">
+                    <span class="config-hint">Get your key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a></span>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="saveButton" class="btn btn-success">Save Prompts</button>
+                <button id="startButton" class="btn btn-primary">Start Practice</button>
+            </div>
+            <div id="saveMessage" class="save-message"></div>
+
+            <div class="github-link">
+                <p>Open source project - <a href="https://github.com/yourusername/toefl-speaking-practice" target="_blank">View on GitHub</a></p>
+            </div>
+        </div>
+
+        <!-- Instruction Screen -->
+        <div id="instructionScreen" class="screen" style="display: none;">
+            <h1 class="toefl-header">TOEFL Speaking Practice</h1>
+            <div class="toefl-instruction">
+                You will now give your opinion about a familiar topic. After you hear the question,
+                you will have 15 seconds to prepare and 45 seconds to speak.
+            </div>
+            <div id="noApiWarning" class="no-api-warning" style="display: none;">
+                <strong>Note:</strong> You are practicing without AI feedback. Add your OpenAI API key on the main page to receive detailed evaluation.
+            </div>
+            <audio id="instructionAudio"></audio>
+            <div class="button-container">
+                <button id="backToMainButton" class="btn btn-warning">Back to Main Page</button>
+                <button id="skipInstructionButton" class="btn btn-primary">Skip to Practice</button>
+            </div>
+        </div>
+
+        <!-- Practice Screen -->
+        <div id="practiceScreen" class="screen" style="display: none;">
+            <h2 class="prompt-counter">Prompt <span id="currentPromptNumber">1</span> of <span id="totalSelectedPrompts">0</span></h2>
+            <div class="toefl-prompt" id="currentPrompt"></div>
+
+            <!-- Audio player for prompt -->
+            <audio id="promptAudio" autoplay></audio>
+
+            <!-- Phase indicator -->
+            <div id="phaseIndicator" class="phase-indicator" style="display: none;"></div>
+
+            <!-- Timer -->
+            <div id="timerContainer" class="timer-container" style="display: none;">
+                <div>
+                    <div class="timer">
+                        <span id="timerValue">15</span>
+                    </div>
+                    <div class="timer-label" id="timerLabel">Preparation Time</div>
+                </div>
+            </div>
+
+            <!-- Recording indicator -->
+            <div class="recording-indicator" id="recordingIndicator">Recording in progress...</div>
+
+            <!-- Recorded audio player -->
+            <div id="recordedAudioContainer"></div>
+
+            <!-- Transcription results -->
+            <div id="transcriptionResults" class="progress-container"></div>
+
+            <!-- Navigation buttons -->
+            <div class="button-container">
+                <button id="resetButton" class="btn btn-warning" disabled>Reset</button>
+                <button id="restartButton" class="btn btn-danger" disabled>Restart</button>
+                <button id="prevButton" class="btn btn-primary" disabled>Previous</button>
+                <button id="nextButton" class="btn btn-primary" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

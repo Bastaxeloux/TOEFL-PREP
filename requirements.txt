@@ -1,0 +1,6 @@
+Flask==3.0.0
+openai-whisper
+openai>=1.0.0
+gTTS==2.5.0
+pydub==0.25.1
+soundfile==0.12.1
