@@ -12,7 +12,7 @@
 
   ---
 
-  **Adaptation par** [Maël Le Guillouzic](https://github.com/Bastaxeloux) | **Projet original** : Lennart Rikk
+  **Réalisé par** [Maël Le Guillouzic](https://github.com/Bastaxeloux)
 
 </div>
 
