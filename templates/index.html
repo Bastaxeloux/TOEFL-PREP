@@ -34,8 +34,9 @@
 
                 <div class="config-item">
                     <label for="apiKey">OpenAI API Key (optional):</label>
-                    <input type="password" id="apiKey" placeholder="sk-...">
+                    <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
                     <span class="config-hint">Get your key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a></span>
+                    <button id="saveApiKeyBtn" class="btn btn-success" style="margin-top: 10px; width: 100%;">Save API Key</button>
                 </div>
             </div>
 

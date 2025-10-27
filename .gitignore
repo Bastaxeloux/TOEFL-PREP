@@ -42,6 +42,7 @@ temp_recording.*
 .env
 .env.local
 
-# User data files
-# prompts.txt
+# User data files (don't commit personal data)
+prompts.txt
 vocabulary_cards.json
+config.json

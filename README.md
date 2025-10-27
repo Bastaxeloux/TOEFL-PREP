@@ -1,4 +1,20 @@
-# TOEFL Independent Speaking Question Practice Tool
+<div align="center">
+  <img src="static/favicon.png" alt="TOEFL Practice Tool Logo" width="120" height="120">
+
+  # TOEFL Independent Speaking Practice Tool
+
+  ### Un outil web pour pratiquer le TOEFL Speaking avec feedback IA
+
+  [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+  [![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
+  [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-orange.svg)](https://openai.com/)
+  [![License](https://img.shields.io/badge/License-Personal%20Use-red.svg)](#licence)
+
+  ---
+
+  **Adaptation par** [Maël Le Guillouzic](https://github.com/Bastaxeloux) | **Projet original** : Lennart Rikk
+
+</div>
 
 Un outil web pour pratiquer les questions de speaking indépendant du TOEFL avec enregistrement audio, transcription automatique, analyse IA et fiches de vocabulaire.
 

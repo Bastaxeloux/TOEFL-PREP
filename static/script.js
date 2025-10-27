@@ -25,6 +25,7 @@ class TOEFLPracticeTool {
 
     initializeEventListeners() {
         document.getElementById('saveButton').addEventListener('click', () => this.handleSave());
+        document.getElementById('saveApiKeyBtn').addEventListener('click', () => this.handleSaveApiKey());
         document.getElementById('startButton').addEventListener('click', () => this.handleStart());
         document.getElementById('backToMainButton').addEventListener('click', () => this.handleBackToMain());
         document.getElementById('skipInstructionButton').addEventListener('click', () => this.showPracticeScreen());
@@ -46,6 +47,46 @@ class TOEFLPracticeTool {
         this.cleanupAudioState();
         // Return to input screen
         this.showScreen('inputScreen');
+    }
+
+    async handleSaveApiKey() {
+        const apiKey = document.getElementById('apiKey').value;
+        const button = document.getElementById('saveApiKeyBtn');
+        const originalText = button.textContent;
+
+        button.textContent = 'Saving...';
+        button.disabled = true;
+
+        try {
+            const response = await fetch('/save_config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ api_key: apiKey })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                button.textContent = 'Saved!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            } else {
+                button.textContent = 'Error!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error saving API key:', error);
+            button.textContent = 'Error!';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
     }
 
     async handleSave() {

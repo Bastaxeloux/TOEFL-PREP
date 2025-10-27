@@ -25,6 +25,7 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 PROMPTS_FILE = Path(__file__).parent / 'prompts.txt'
 VOCABULARY_FILE = Path(__file__).parent / 'vocabulary_cards.json'
+CONFIG_FILE = Path(__file__).parent / 'config.json'
 
 def find_ffmpeg():
     """
@@ -144,11 +145,32 @@ def save_vocabulary_cards(cards):
         print(f"Error saving vocabulary cards: {e}")
         return False
 
+def load_config():
+    """Load config from file"""
+    try:
+        if CONFIG_FILE.exists():
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"Error loading config: {e}")
+    return {}
+
+def save_config(config):
+    """Save config to file"""
+    try:
+        with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+            json.dump(config, f, indent=2, ensure_ascii=False)
+        return True
+    except Exception as e:
+        print(f"Error saving config: {e}")
+        return False
+
 @app.route('/')
 def index():
     """Render the main page"""
     prompts = load_prompts()
-    return render_template('index.html', default_prompts=prompts)
+    config = load_config()
+    return render_template('index.html', default_prompts=prompts, api_key=config.get('api_key', ''))
 
 @app.route('/vocabulary')
 def vocabulary():
@@ -164,6 +186,20 @@ def save_prompts():
         with open(PROMPTS_FILE, 'w', encoding='utf-8') as f:
             f.write(prompts)
         return jsonify({'success': True, 'message': 'Prompts saved successfully!'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/save_config', methods=['POST'])
+def save_config_route():
+    """Save config (API key) to file"""
+    try:
+        data = request.get_json()
+        config = load_config()
+        config['api_key'] = data.get('api_key', '')
+        if save_config(config):
+            return jsonify({'success': True, 'message': 'Config saved successfully!'})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to save config'}), 500
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
