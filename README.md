@@ -25,6 +25,25 @@ Si vous avez d'autres soucis que ceux énoncés dans ce README : débrouillez-vo
 
 ---
 
+### Utilisation rapide
+
+```bash
+git clone https://github.com/Bastaxeloux/TOEFL-PREP.git
+cd TOEFL-PREP
+# Gérer votre venv favori
+python -m venv venv
+# Pour activer l'environnement:
+source venv/bin/activate # (macOS/Linux)
+# Sur Windows: venv\Scripts\activate 
+
+# Vous pouvez tout installer (sauf ffmpeg, voir ci dessous)
+pip install -r requirements.txt
+# Lancer l'application
+python app.py
+```
+
+L'application sera accessible sur http://localhost:5001
+
 ## Fonctionnalités
 
 - Interface web LOCALE !
@@ -50,21 +69,16 @@ Si vous avez d'autres soucis que ceux énoncés dans ce README : débrouillez-vo
 ### Installation manuelle
 
 ```bash
-git clone https://github.com/VOTRE-USERNAME/toefl-speaking-practice.git
-cd toefl-speaking-practice
-
+git clone https://github.com/Bastaxeloux/TOEFL-PREP.git
+cd TOEFL-PREP
 # Gérer votre venv favori
 python -m venv venv
+# Pour activer l'environnement:
+source venv/bin/activate # (macOS/Linux)
+# Sur Windows: venv\Scripts\activate 
 
-# Pour activer l'environnement
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-
-# Vous pouvez tout installer avec
+# Vous pouvez tout installer (sauf ffmpeg, voir ci dessous)
 pip install -r requirements.txt
-
 # Lancer l'application
 python app.py
 ```
@@ -202,27 +216,6 @@ Si vous souhaitez contribuer du code :
    - Tests effectués
 
 Toutes les contributions seront créditées dans le README.
-
----
-
-## Licence
-
-Cet outil est disponible pour **usage personnel et éducatif uniquement**. L'usage commercial est strictement interdit. Vous pouvez modifier le code pour votre usage personnel.
-
----
-
-## Crédits
-
-- Idée originale : Lennart Rikk
-
----
-
-## Liens utiles
-
-- [TOEFL Official Website](https://www.ets.org/toefl)
-- [OpenAI Whisper](https://github.com/openai/whisper)
-- [Flask Documentation](https://flask.palletsprojects.com/)
-- [OpenAI Platform](https://platform.openai.com/)
 
 ---
 
