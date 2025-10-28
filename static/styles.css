@@ -29,6 +29,17 @@ h1 {
     text-align: center;
 }
 
+.header-logo-container {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.page-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
 h2 {
     color: #333;
     margin-bottom: 15px;
@@ -69,8 +80,7 @@ h3 {
     font-weight: 500;
 }
 
-.config-item input[type="number"],
-.config-item input[type="password"] {
+.config-item input[type="number"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -78,10 +88,33 @@ h3 {
     background: white;
 }
 
-.config-item input[type="number"]:focus,
-.config-item input[type="password"]:focus {
+.config-item input[type="number"]:focus {
     outline: none;
     border-color: #666;
+}
+
+.api-key-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.api-key-input-group input[type="password"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    background: white;
+}
+
+.api-key-input-group input[type="password"]:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.btn-compact {
+    padding: 10px 15px;
+    white-space: nowrap;
 }
 
 .config-hint {
@@ -151,6 +184,16 @@ button:disabled {
 
 .btn-primary:hover:not(:disabled) {
     background: #000;
+}
+
+.btn-highlight {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-highlight:hover:not(:disabled) {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
 }
 
 .btn-success {

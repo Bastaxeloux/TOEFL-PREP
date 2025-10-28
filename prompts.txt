@@ -1,3 +1,53 @@
+Some people believe that universities should require all students to take courses outside their major field of study, while others think students should focus exclusively on their chosen major. Which approach do you think is better? Use specific reasons and examples to support your answer.
+
+Do you prefer to receive constructive criticism immediately after completing a task, or would you rather wait a few days before receiving feedback? Explain your preference with specific details.
+
+Some people prefer to maintain a small circle of close friends they've known for many years. Others prefer to continuously expand their social network and meet new people. Which approach do you prefer and why?
+
+When working on a difficult problem, do you prefer to take breaks and return to it later, or do you prefer to work continuously until you solve it? Explain your reasoning.
+
+Some people believe that making decisions quickly is better, even if it means making occasional mistakes. Others think it's better to take time deliberating before making any decision. Which viewpoint do you support? Provide specific reasons.
+
+Do you prefer living in a neighborhood where most residents are around your age, or in a more diverse neighborhood with people of all ages? Use specific examples to explain your preference.
+
+Some students prefer professors who provide detailed instructions for every assignment, while others prefer professors who give minimal guidance and allow creative freedom. Which type of professor do you prefer? Explain why.
+
+When learning about current events, do you prefer to read multiple short articles from different sources, or one comprehensive in-depth article? Support your answer with specific reasons.
+
+Some people believe that expressing disagreement openly in professional or academic settings is important for progress. Others think maintaining harmony is more important than expressing dissent. Which view do you support and why?
+
+Do you think it's better for students to choose a university close to their family home, or to attend a university far away in a different city or region? Explain your position with specific examples.
+
+Your university is renovating a building on campus. Which new facility would benefit students most: (a) a meditation and wellness center, (b) a makerspace with 3D printers and tools, or (c) a 24-hour collaborative study space? Explain your choice.
+
+For your capstone project, you can choose one of three formats: (a) writing a traditional research paper, (b) creating a multimedia presentation with video and interactive elements, or (c) organizing a community event related to your topic. Which would you choose and why?
+
+Your city is investing in public spaces. Which would be most beneficial: (a) renovating existing parks and green spaces, (b) building new community centers with meeting rooms, or (c) creating dedicated bicycle lanes and pedestrian zones? Support your answer.
+
+You have a free elective slot in your schedule. Would you prefer to take: (a) a course completely unrelated to your major to broaden your knowledge, (b) an advanced course in your major field, or (c) a practical skills course like public speaking or financial literacy? Explain your reasoning.
+
+A company offers you a summer internship with three different work arrangements: (a) remote work from home, (b) hybrid schedule with 2 days in office and 3 remote, or (c) fully in-office five days per week. Which would you choose and why?
+
+Do you agree or disagree with the following statement? "Students learn more from mistakes than from successes." Use specific reasons and examples to support your opinion.
+
+Do you agree or disagree with the following statement? "Artificial intelligence will eventually replace human teachers in most educational contexts." Explain your position.
+
+Do you agree or disagree with the following statement? "Universities should eliminate letter grades and adopt pass/fail grading systems for all courses." Provide specific reasons for your view.
+
+Do you agree or disagree with the following statement? "People who frequently change their careers have more fulfilling professional lives than those who stay in one career." Support your answer.
+
+Do you agree or disagree with the following statement? "Social media has made people less capable of forming deep, meaningful relationships." Use details and examples to explain your opinion.
+
+Some universities are eliminating application fees entirely to encourage more students to apply. Discuss both the advantages and potential disadvantages of this approach. Which do you think are more significant?
+
+Many companies now allow employees to work remotely on a permanent basis. Discuss the advantages and disadvantages of this arrangement, and state whether you think the benefits outweigh the drawbacks.
+
+Some high schools are extending the school day to include mandatory study hall and tutoring sessions. What are the advantages and disadvantages of this policy? Which are more important?
+
+Increasingly, news organizations are relying on artificial intelligence to write news articles. What are the advantages and disadvantages of AI-generated news content? Explain your perspective.
+
+Some cities are implementing "car-free zones" where only pedestrians, cyclists, and public transit are allowed. Discuss the advantages and disadvantages of this approach. Do you think more cities should adopt this policy?
+
 Some people believe that couples should live together before marriage. Do you agree or disagree with this practice? Support your opinion with specific examples.
 
 Do you think virtual reality technology should be used in classrooms? Give specific reasons for your position.
@@ -293,3 +343,153 @@ If you could choose between having more time or more money, which would you choo
 Some people believe that success depends more on hard work than natural talent. What's your position?
 
 Do you think it's better to specialize in one field or have knowledge in many areas? Explain your reasoning.
+
+Some people believe that failure is an essential part of learning, while others think that people learn best when they succeed consistently. Which viewpoint do you agree with? Explain your reasoning.
+
+Do you prefer to have a detailed plan for your entire day, or do you prefer to be spontaneous and decide what to do as the day unfolds? Use specific reasons to support your answer.
+
+When making important purchases, do you prefer to research extensively online before buying, or do you prefer to visit physical stores to see and test products in person? Explain your preference.
+
+Some universities allow students to design their own major by combining courses from different departments. Others require students to choose from established majors. Which system do you think is better for students' education?
+
+Do you agree or disagree with the following statement? "People should always tell the truth, even when a small lie might prevent someone's feelings from being hurt." Support your position with specific examples.
+
+When learning a new skill, do you prefer to practice alone until you feel confident, or do you prefer to practice with others from the beginning, even if you make mistakes? Explain your choice.
+
+Some people believe that students should be required to participate in community service before graduating. Others think community service should remain voluntary. Which position do you support and why ?
+
+Your company offers you a significant promotion that requires relocating to a different country for three years. Would you accept this opportunity or decline it? Explain the factors that would influence your decision.
+
+Do you think it's better for young professionals to change jobs every few years to gain diverse experience, or to stay with one company for many years to develop deep expertise? Support your answer.
+
+Some people prefer to exercise alone, while others prefer group fitness classes or team sports. Which type of physical activity do you find more motivating and why? 
+
+When faced with a moral dilemma in your personal life, do you rely more on logical reasoning or on your intuitive feelings? Explain which approach you trust more.
+
+Do you agree or disagree with the following statement? "Advanced artificial intelligence poses a greater risk than benefit to humanity." Use specific reasons to explain your position.
+
+Some educators believe students should specialize in their field of interest as early as high school. Others think students benefit from a broad, general education until university. Which approach do you think is more effective ? 
+
+When traveling to a new city, do you prefer to follow a structured itinerary with planned activities, or do you prefer to explore randomly and discover places spontaneously ? Support your preference.
+
+Do you think governments should prioritize funding for space exploration or use those resources to address problems on Earth? Explain your reasoning with specific examples.
+
+Some people believe that handwriting is becoming obsolete and schools should focus exclusively on digital literacy. Others think handwriting remains an important skill. What is your opinion ?
+
+When working on group projects, do you prefer to divide tasks equally among all members, or to assign roles based on each person's strengths and weaknesses? Explain your approach.
+
+Do you agree or disagree with the following statement? "Students perform better academically when they wear school uniforms." Support your position.
+
+Some companies allow employees to set their own working hours as long as they complete their work. Others maintain fixed schedules for all employees. Which policy do you think is more effective and why?
+
+When you need advice about a serious personal problem, do you prefer to consult multiple people to get different perspectives, or do you prefer to confide in one trusted person? Explain your reasoning.
+
+Do you think children should be given a weekly allowance regardless of their behavior, or should allowance be tied to completing chores and responsibilities? Support your answer with specific reasons.
+
+Some people believe that competitive grading in schools motivates students, while others think it creates unhealthy pressure. Which perspective do you find more convincing?
+
+When learning about history, do you prefer to study individual historical figures and their personal stories, or do you prefer to understand broader social and economic trends? Explain your preference.
+
+Do you think apartment buildings should prohibit pets, allow pets with restrictions, or have no pet policies at all? Explain which policy you think is most fair.
+
+Some people believe that everyone should learn to code in the 21st century, while others think coding is a specialized skill not everyone needs. What is your position on this issue?
+
+When preparing for an important presentation, do you prefer to memorize your entire speech word-for-word, or do you prefer to learn key points and speak more naturally? Explain your approach.
+
+Do you agree or disagree with the following statement? "Parents should not be friends with their children on social media." Support your opinion with specific reasons.
+
+Some cities are implementing policies to ban single-use plastics like bags and straws. Do you think this type of regulation is necessary, or should consumers make these decisions voluntarily? Explain your view.
+
+When attending a lecture or conference, do you prefer to take detailed notes by hand, or do you prefer to record the audio and review it later? Support your preference.
+
+Do you think celebrities and public figures have a responsibility to be role models, or should they be free to behave however they choose in their personal lives? Explain your position.
+
+Some people believe that students learn best early in the morning, while others argue that afternoon or evening classes are more effective. Based on your experience, when do you think students are most receptive to learning?
+
+When someone gives you constructive criticism, do you prefer them to be very direct and straightforward, or to soften their feedback with positive comments first? Explain which approach you find more helpful.
+
+Do you agree or disagree with the following statement? "Modern technology has made people less creative than previous generations." Use specific examples to support your answer.
+
+Some museums and cultural institutions charge admission fees, while others are free to the public. Which model do you think better serves the community? Explain your reasoning.
+
+When making friends as an adult, do you prefer to connect with people who share your interests and hobbies, or do you prefer to befriend people who are very different from you? Support your answer.
+
+Do you think employers should be allowed to view candidates' social media profiles when making hiring decisions, or should personal online activity remain private? Explain your position.
+
+Some people prefer to read news articles from multiple sources to form their own opinions, while others prefer analysis and commentary from trusted journalists. Which approach do you take and why ?
+
+When you accomplish something significant, do you prefer to celebrate publicly and share your achievement with others, or do you prefer to enjoy your success privately? Explain your preference.
+
+Do you agree or disagree with the following statement? "Schools should teach financial literacy and practical life skills instead of some traditional academic subjects." Support your position.
+
+Some restaurants are eliminating tipping and including service charges in menu prices instead. Do you think this is a positive change or should the traditional tipping system be maintained ? Explain your view.
+
+When learning about different cultures, do you prefer to read books and watch documentaries, or do you prefer to travel and experience cultures directly ? Support your answer with specific reasons.
+
+Do you think parents should monitor their teenagers' text messages and online activity, or should teenagers have privacy in their digital communications ? Explain your position on this controversial issue.
+
+Some people believe that personality is mostly determined by genetics, while others think environment and experiences are more important. Which factor do you think has a greater influence? Support your answer.
+
+When you disagree with a friend's important life decision, do you prefer to express your concerns honestly even if it causes tension, or do you prefer to support them regardless of your personal opinion? Explain your approach.
+
+Do you agree or disagree with the following statement? "Professional athletes are paid too much money compared to teachers and healthcare workers." Use specific reasoning to support your view.
+
+Some companies are implementing four-day work weeks with longer daily hours. Would you prefer this schedule or the traditional five-day week ? Explain the advantages and disadvantages of your choice.
+
+When you're feeling stressed or overwhelmed, do you prefer to talk through your problems with someone, or do you prefer to process your emotions privately ? Support your preference.
+
+Do you think high schools should offer more vocational training programs alongside traditional college-preparatory courses, or should they focus primarily on academics ? Explain your reasoning.
+
+Some people believe that children should be raised bilingually from birth, while others think it's better to master one language first. What is your opinion on early bilingual education ?
+
+When dining at restaurants, do you prefer to order dishes you've tried before and know you'll enjoy, or do you prefer to try new and unfamiliar items? Explain what influences your choice.
+
+Do you agree or disagree with the following statement? "People who frequently use social media are lonelier than those who use it sparingly." Support your position with specific examples.
+
+Some universities are eliminating lectures in favor of active learning environments where students work on problems in groups. Do you think this is an improvement over traditional lecture-based teaching? Explain your view.
+
+When you need to make a difficult decision, do you prefer to decide quickly based on instinct, or do you prefer to analyze the situation carefully even if it takes much longer? Support your answer.
+
+Do you think governments should implement taxes on unhealthy foods like soda and candy to discourage consumption, or should people have complete freedom to make their own dietary choices? Explain your position.
+
+Some people believe that work-life balance is achievable, while others think it's an unrealistic expectation in demanding careers. What is your perspective on this issue?
+
+When someone asks for your opinion on their creative work like writing or art, do you prefer to be completely honest even if critical, or do you prefer to focus on positive aspects? Explain your approach.
+
+Do you agree or disagree with the following statement? "Experience is more valuable than formal education when it comes to career success." Use specific reasons to support your answer.
+
+Some cities are banning cars from downtown areas to reduce pollution and congestion. Do you think this type of restriction is justified, or does it unfairly limit personal freedom? Explain your reasoning.
+
+When you make a mistake at work or school, do you prefer to acknowledge it immediately and ask for help, or do you prefer to try to fix it yourself before involving others? Support your preference.
+
+Do you think mandatory retirement ages are discriminatory against older workers, or are they necessary to create opportunities for younger generations? Explain your position on this controversial policy.
+
+Some people believe that couples should live together before marriage to ensure compatibility, while others think it's better to wait until after marriage. What is your view on cohabitation before marriage?
+
+When learning about controversial historical events, do you prefer when teachers present multiple perspectives without stating their own opinion, or when teachers clearly explain which interpretation is most historically accurate? Support your answer.
+
+Do you agree or disagree with the following statement? "People should avoid discussing politics and religion in social situations." Explain the reasoning behind your position.
+
+Some employers are eliminating degree requirements for certain positions and focusing on skills and experience instead. Do you think this is a positive trend or could it have negative consequences? Support your view.
+
+When you're working on a creative project, do you prefer complete freedom to explore any direction, or do you prefer some constraints and guidelines? Explain which approach helps you produce better work.
+
+Do you think schools should teach students how to identify misinformation and fake news, or is this skill something people should develop independently? Explain your reasoning.
+
+Some people believe that automation and AI will create more jobs than they eliminate, while others fear widespread unemployment. Which prediction do you find more convincing? Support your answer.
+
+When you travel for vacation, do you prefer destinations that are popular and well-developed for tourism, or remote and less-visited locations? Explain what factors influence your preference.
+
+Do you agree or disagree with the following statement? "People should be required to perform military or civilian national service for one year after finishing high school." Use specific reasons to support your position.
+
+Some companies are allowing employees to work remotely from anywhere in the world. Would you take advantage of this opportunity to live in different countries, or would you prefer to stay in one location? Explain your reasoning.
+
+When you need to concentrate on difficult work, do you prefer complete silence, background music, or ambient noise like a coffee shop? Support your preference with specific reasons.
+
+Do you think zoos serve an important educational and conservation purpose, or should wild animals not be kept in captivity regardless of the benefits? Explain your position on this ethical issue.
+
+Some educators believe that students should be taught to question authority and think critically about rules, while others think students should learn to respect authority first. Which approach do you think is more important for young people's development?
+
+When someone shares good news with you, do you prefer to celebrate enthusiastically, or do you tend to be more measured and practical in your response? Explain which type of reaction you typically have and why.
+
+Do you agree or disagree with the following statement? "People who speak multiple languages have a broader worldview than monolinguals." Support your answer with specific reasoning.

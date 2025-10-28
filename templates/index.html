@@ -13,17 +13,14 @@
     <div id="app" class="toefl-container">
         <!-- Input Screen -->
         <div id="inputScreen" class="screen">
+            <div class="header-logo-container">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="TOEFL Logo" class="page-logo">
+            </div>
             <h1 class="toefl-header">TOEFL Independent Speaking Practice Tool</h1>
-            <p class="toefl-instructions">
-                Enter your prompts below, separated by linebreak.<br>
-                NB! You can easily generate more prompts by using some large language model and then enter them here!
-            </p>
 
             <div class="vocabulary-link">
                 <a href="/vocabulary" class="btn btn-primary">View My Vocabulary Flashcards</a>
             </div>
-
-            <textarea id="promptInput" rows="6" cols="80">{{ default_prompts }}</textarea>
 
             <div class="config-section">
                 <div class="config-item">
@@ -34,16 +31,25 @@
 
                 <div class="config-item">
                     <label for="apiKey">OpenAI API Key (optional):</label>
-                    <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
+                    <div class="api-key-input-group">
+                        <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
+                        <button id="saveApiKeyBtn" class="btn btn-success btn-compact">Save</button>
+                    </div>
                     <span class="config-hint">Get your key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a></span>
-                    <button id="saveApiKeyBtn" class="btn btn-success" style="margin-top: 10px; width: 100%;">Save API Key</button>
                 </div>
             </div>
 
             <div class="button-container">
+                <button id="startButton" class="btn btn-primary btn-highlight">Start Practice</button>
                 <button id="saveButton" class="btn btn-success">Save Prompts</button>
-                <button id="startButton" class="btn btn-primary">Start Practice</button>
             </div>
+
+            <p class="toefl-instructions">
+                Enter your prompts below, separated by linebreak.<br>
+                NB! You can easily generate more prompts by using some large language model and then enter them here!
+            </p>
+
+            <textarea id="promptInput" rows="6" cols="80">{{ default_prompts }}</textarea>
             <div id="saveMessage" class="save-message"></div>
 
             <div class="github-link">
