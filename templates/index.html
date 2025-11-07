@@ -3,117 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOEFL Speaking Practice</title>
+    <title>TOEFL Complete Test - All 4 Tasks</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}?v=2">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}?v=2">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}?v=2">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div id="app" class="toefl-container">
-        <!-- Input Screen -->
-        <div id="inputScreen" class="screen">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="screen">
             <div class="header-logo-container">
                 <img src="{{ url_for('static', filename='favicon.png') }}" alt="TOEFL Logo" class="page-logo">
             </div>
-            <h1 class="toefl-header">TOEFL Independent Speaking Practice Tool</h1>
+            <h1 class="toefl-header">TOEFL Speaking Test</h1>
 
-            <div class="vocabulary-link">
-                <a href="/vocabulary" class="btn btn-primary">View My Vocabulary Flashcards</a>
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button id="instructionsTab" class="tab-btn active">Test Instructions</button>
+                <button id="customizationTab" class="tab-btn">Customization</button>
             </div>
 
-            <div class="config-section">
-                <div class="config-item">
-                    <label for="numPrompts">Number of random questions to practice:</label>
-                    <input type="number" id="numPrompts" min="1" max="50" value="5">
-                    <span class="config-hint">(Total available: <span id="totalPrompts">0</span>)</span>
+            <!-- Instructions Tab Content -->
+            <div id="instructionsContent" class="tab-content active">
+                <div class="task-instructions">
+                    <p><strong>This complete test includes all 4 TOEFL Speaking tasks in order:</strong></p>
+                    <p><strong>Task 1</strong>: Independent Speaking (15s Prep, 45s Speak)</p>
+                    <p><strong>Task 2</strong>: Campus Announcement (50s Read, Listen, 30s prep, 60s speak)</p>
+                    <p><strong>Task 3</strong>: Academic Concept (50s Read, Listen, 30s prep, 60s speak)</p>
+                    <p><strong>Task 4</strong>: Lecture Summary (Listen, 20s prep, 60s speak)</p>
+                    <p><strong>Total time: 15-20 minutes</strong></p>
+                    <p style="margin-top: 20px; color: #666;"><em>All tasks will use random prompts. To customize specific prompts or add your API key, go to the Customization tab.</em></p>
                 </div>
 
-                <div class="config-item">
-                    <label for="apiKey">OpenAI API Key (optional):</label>
-                    <div class="api-key-input-group">
-                        <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
-                        <button id="saveApiKeyBtn" class="btn btn-success btn-compact">Save</button>
+                <div id="validationWarning" class="no-api-warning" style="display: none;">
+                    <strong>Missing Content!</strong>
+                    <ul id="missingContentList" style="text-align: left; margin: 10px auto; display: inline-block;"></ul>
+                    <p>Please add all required content before starting the test.</p>
+                </div>
+
+                <!-- Main Start Button -->
+                <div class="button-container" style="margin-top: 30px;">
+                    <button id="validateAndStartBtn" class="btn btn-primary btn-highlight">Start Test</button>
+                </div>
+
+                <!-- Divider -->
+                <div style="margin: 30px auto; width: 80%; max-width: 400px; height: 1px; background: linear-gradient(to right, transparent, #ddd, transparent);"></div>
+
+                <!-- Secondary Actions -->
+                <div class="button-container" style="gap: 15px;">
+                    <button onclick="window.location.href='/vocabulary'" class="btn btn-secondary">View My Vocabulary Flashcards</button>
+                    <button onclick="window.location.href='/other-tasks'" class="btn btn-secondary">Practice Individual Tasks</button>
+                </div>
+            </div>
+
+            <!-- Customization Tab Content -->
+            <div id="customizationContent" class="tab-content">
+                <div class="config-section">
+                    <div class="config-item">
+                        <label for="apiKey">OpenAI API Key (required for evaluation):</label>
+                        <div class="api-key-input-group">
+                            <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
+                            <button id="saveApiKeyBtn" class="btn btn-success btn-compact">Save</button>
+                        </div>
                     </div>
-                    <span class="config-hint">Get your key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a></span>
+
+                    <h3 style="margin-top: 30px; text-align: center;">Task Content Setup</h3>
+
+                    <div class="config-item">
+                        <label for="task1Prompts">Task 1 - Independent Speaking Prompts:</label>
+                        <textarea id="task1Prompts" rows="4" placeholder="Enter prompts for Task 1, one per line...">{{ task1_content }}</textarea>
+                        <span class="config-hint">One random prompt will be selected</span>
+                    </div>
+
+                    <div class="config-item">
+                        <label for="task2PromptSelect">Task 2 - Campus Announcement:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <select id="task2PromptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Random Prompt --</option>
+                            </select>
+                            <button id="task2NewBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                            <button id="task2EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                        </div>
+                        <div id="task2Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
+                            <em>Random mode - a prompt will be selected when you start</em>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label for="task3PromptSelect">Task 3 - Academic Concept:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <select id="task3PromptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Random Prompt --</option>
+                            </select>
+                            <button id="task3NewBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                            <button id="task3EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                        </div>
+                        <div id="task3Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
+                            <em>Random mode - a prompt will be selected when you start</em>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label for="task4PromptSelect">Task 4 - Lecture Summary:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <select id="task4PromptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Random Prompt --</option>
+                            </select>
+                            <button id="task4NewBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                            <button id="task4EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                        </div>
+                        <div id="task4Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
+                            <em>Random mode - a prompt will be selected when you start</em>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="button-container">
-                <button id="startButton" class="btn btn-primary btn-highlight">Start Practice</button>
-                <button id="saveButton" class="btn btn-success">Save Prompts</button>
-            </div>
-
-            <p class="toefl-instructions">
-                Enter your prompts below, separated by linebreak.<br>
-                NB! You can easily generate more prompts by using some large language model and then enter them here!
-            </p>
-
-            <textarea id="promptInput" rows="6" cols="80">{{ default_prompts }}</textarea>
-            <div id="saveMessage" class="save-message"></div>
-
-            <div class="github-link">
-                <p>Open source project - <a href="https://github.com/Bastaxeloux/TOEFL-PREP" target="_blank">View on GitHub</a></p>
             </div>
         </div>
 
-        <!-- Instruction Screen -->
-        <div id="instructionScreen" class="screen" style="display: none;">
-            <h1 class="toefl-header">TOEFL Speaking Practice</h1>
-            <div class="toefl-instruction">
-                You will now give your opinion about a familiar topic. After you hear the question,
-                you will have 15 seconds to prepare and 45 seconds to speak.
+        <!-- Test Progress Screen -->
+        <div id="testScreen" class="screen" style="display: none;">
+            <div class="test-progress">
+                <h2>Task <span id="currentTaskNum">1</span> of 4: <span id="currentTaskName">Independent Speaking</span></h2>
             </div>
-            <div id="noApiWarning" class="no-api-warning" style="display: none;">
-                <strong>Note:</strong> You are practicing without AI feedback. Add your OpenAI API key on the main page to receive detailed evaluation.
-            </div>
-            <audio id="instructionAudio"></audio>
-            <div class="button-container">
-                <button id="backToMainButton" class="btn btn-warning">Back to Main Page</button>
-                <button id="skipInstructionButton" class="btn btn-primary">Skip to Practice</button>
+            <div id="taskContainer"></div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div id="resultsScreen" class="screen" style="display: none;">
+            <h1 class="toefl-header">Complete Test Results</h1>
+            <div id="allResults"></div>
+            <div class="button-container" style="margin-top: 30px;">
+                <button id="restartTestBtn" class="btn btn-primary">Start New Test</button>
+                <button onclick="window.location.href='/other-tasks'" class="btn btn-secondary">Practice Individual Tasks</button>
             </div>
         </div>
 
-        <!-- Practice Screen -->
-        <div id="practiceScreen" class="screen" style="display: none;">
-            <h2 class="prompt-counter">Prompt <span id="currentPromptNumber">1</span> of <span id="totalSelectedPrompts">0</span></h2>
-            <div class="toefl-prompt" id="currentPrompt"></div>
-
-            <!-- Audio player for prompt -->
-            <audio id="promptAudio" autoplay></audio>
-
-            <!-- Phase indicator -->
-            <div id="phaseIndicator" class="phase-indicator" style="display: none;"></div>
-
-            <!-- Timer -->
-            <div id="timerContainer" class="timer-container" style="display: none;">
-                <div>
-                    <div class="timer">
-                        <span id="timerValue">15</span>
+        <!-- Modal for Task 2 prompts -->
+        <div id="task2Modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="task2ModalTitle">New Task 2 Prompt</h2>
+                    <span class="modal-close" data-modal="task2Modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="config-item">
+                        <label for="task2ModalReadingText">Reading Passage:</label>
+                        <textarea id="task2ModalReadingText" rows="8" placeholder="Paste the reading passage here..."></textarea>
                     </div>
-                    <div class="timer-label" id="timerLabel">Preparation Time</div>
+                    <div class="config-item">
+                        <label for="task2ModalAudioSelect">Conversation Audio:</label>
+                        <div style="margin-bottom: 10px;">
+                            <select id="task2ModalAudioSelect" style="width: 100%; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Select existing audio or upload new --</option>
+                            </select>
+                        </div>
+                        <label for="task2ModalAudioUpload" style="font-weight: normal; color: #666;">Or upload new audio file:</label>
+                        <input type="file" id="task2ModalAudioUpload" accept="audio/*">
+                        <div id="task2ModalAudioStatus" class="audio-status"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="task2ModalDeleteBtn" class="btn" style="background-color: #dc3545; color: white; margin-right: auto;">Delete</button>
+                    <button id="task2ModalCancelBtn" class="btn">Cancel</button>
+                    <button id="task2ModalSaveBtn" class="btn btn-success">Save Prompt</button>
                 </div>
             </div>
+        </div>
 
-            <!-- Recording indicator -->
-            <div class="recording-indicator" id="recordingIndicator">Recording in progress...</div>
+        <!-- Modal for Task 3 prompts -->
+        <div id="task3Modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="task3ModalTitle">New Task 3 Prompt</h2>
+                    <span class="modal-close" data-modal="task3Modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="config-item">
+                        <label for="task3ModalReadingText">Reading Passage:</label>
+                        <textarea id="task3ModalReadingText" rows="8" placeholder="Paste the reading passage here..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="task3ModalQuestionText">Question (optional - leave empty for generic question):</label>
+                        <textarea id="task3ModalQuestionText" rows="2" style="width: 100%; min-height: 60px; padding: 12px; border: 2px solid #333; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;" placeholder="Example: Using the example from the lecture, explain the concept of..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="task3ModalAudioSelect">Lecture Audio:</label>
+                        <div style="margin-bottom: 10px;">
+                            <select id="task3ModalAudioSelect" style="width: 100%; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Select existing audio or upload new --</option>
+                            </select>
+                        </div>
+                        <label for="task3ModalAudioUpload" style="font-weight: normal; color: #666;">Or upload new audio file:</label>
+                        <input type="file" id="task3ModalAudioUpload" accept="audio/*">
+                        <div id="task3ModalAudioStatus" class="audio-status"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="task3ModalDeleteBtn" class="btn" style="background-color: #dc3545; color: white; margin-right: auto;">Delete</button>
+                    <button id="task3ModalCancelBtn" class="btn">Cancel</button>
+                    <button id="task3ModalSaveBtn" class="btn btn-success">Save Prompt</button>
+                </div>
+            </div>
+        </div>
 
-            <!-- Recorded audio player -->
-            <div id="recordedAudioContainer"></div>
-
-            <!-- Transcription results -->
-            <div id="transcriptionResults" class="progress-container"></div>
-
-            <!-- Navigation buttons -->
-            <div class="button-container">
-                <button id="resetButton" class="btn btn-warning" disabled>Reset</button>
-                <button id="restartButton" class="btn btn-danger" disabled>Restart</button>
-                <button id="prevButton" class="btn btn-primary" disabled>Previous</button>
-                <button id="nextButton" class="btn btn-primary" disabled>Next</button>
+        <!-- Modal for Task 4 prompts -->
+        <div id="task4Modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="task4ModalTitle">New Task 4 Prompt</h2>
+                    <span class="modal-close" data-modal="task4Modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="config-item">
+                        <label for="task4ModalQuestionText">Question (optional - leave empty for generic question):</label>
+                        <textarea id="task4ModalQuestionText" rows="2" style="width: 100%; min-height: 60px; padding: 12px; border: 2px solid #333; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;" placeholder="Example: Using points and examples from the lecture, explain..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="task4ModalNotesText">Optional Notes:</label>
+                        <textarea id="task4ModalNotesText" rows="4" placeholder="Optional: Add notes about the lecture topic..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="task4ModalAudioSelect">Lecture Audio:</label>
+                        <div style="margin-bottom: 10px;">
+                            <select id="task4ModalAudioSelect" style="width: 100%; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Select existing audio or upload new --</option>
+                            </select>
+                        </div>
+                        <label for="task4ModalAudioUpload" style="font-weight: normal; color: #666;">Or upload new audio file:</label>
+                        <input type="file" id="task4ModalAudioUpload" accept="audio/*">
+                        <div id="task4ModalAudioStatus" class="audio-status"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="task4ModalDeleteBtn" class="btn" style="background-color: #dc3545; color: white; margin-right: auto;">Delete</button>
+                    <button id="task4ModalCancelBtn" class="btn">Cancel</button>
+                    <button id="task4ModalSaveBtn" class="btn btn-success">Save Prompt</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='complete_test.js') }}"></script>
 </body>
 </html>

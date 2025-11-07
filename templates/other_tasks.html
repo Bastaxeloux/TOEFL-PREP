@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEFL Practice Individual Tasks</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header-logo-container">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="TOEFL Logo" class="page-logo">
+        </div>
+        <h1 class="toefl-header">Practice Individual Tasks</h1>
+
+        <div class="task-menu">
+            <div class="task-card">
+                <h2>Task 1: Independent Speaking</h2>
+                <p class="task-description">
+                    Give your opinion about a familiar topic.<br>
+                    <strong>Format:</strong> 15s preparation, 45s speaking
+                </p>
+                <a href="/task1" class="btn btn-primary btn-large">Start Task 1</a>
+            </div>
+
+            <div class="task-card">
+                <h2>Task 2: Campus Announcement</h2>
+                <p class="task-description">
+                    Read a short announcement, listen to a conversation, then speak about it.<br>
+                </p>
+                <a href="/task2" class="btn btn-primary btn-large">Start Task 2</a>
+            </div>
+
+            <div class="task-card">
+                <h2>Task 3: Academic Concept</h2>
+                <p class="task-description">
+                    Read an academic article, listen to a lecture with examples, then explain the concept.<br>
+                </p>
+                <a href="/task3" class="btn btn-primary btn-large">Start Task 3</a>
+            </div>
+
+            <div class="task-card">
+                <h2>Task 4: Lecture Summary</h2>
+                <p class="task-description">
+                    Listen to an academic lecture, then summarize the main points.<br>
+                </p>
+                <a href="/task4" class="btn btn-primary btn-large">Start Task 4</a>
+            </div>
+        </div>
+
+        <div class="button-container" style="margin-top: 40px;">
+            <button onclick="window.location.href='/'" class="btn btn-primary">Back to Complete Test</button>
+        </div>
+
+        <div class="github-link">
+            <p>Open source project - <a href="https://github.com/Bastaxeloux/TOEFL-PREP" target="_blank">View on GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

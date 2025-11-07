@@ -43,6 +43,15 @@ temp_recording.*
 .env.local
 
 # User data files (don't commit personal data)
+data/
+!data/task*/prompts.json
+!data/task*/audio/.gitkeep
+
+# Legacy files (for migration)
 prompts.txt
 vocabulary_cards.json
 config.json
+task2_content.json
+task3_content.json
+task4_content.json
+uploads/
