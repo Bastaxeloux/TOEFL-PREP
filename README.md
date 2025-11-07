@@ -1,9 +1,9 @@
 <div align="center">
   <img src="static/favicon.png" alt="TOEFL Practice Tool Logo" width="120" height="120">
 
-  # TOEFL Independent Speaking Practice Tool
+  # TOEFL Speaking Practice Tool
 
-  ### Un outil web pour pratiquer le TOEFL Speaking avec feedback IA
+  ### Un outil web pour pratiquer les 4 tâches du TOEFL Speaking avec feedback IA
 
   [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
   [![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
@@ -16,7 +16,7 @@
 
 </div>
 
-Un outil web pour pratiquer les questions de speaking indépendant du TOEFL avec enregistrement audio, transcription automatique, analyse IA et fiches de vocabulaire.
+Un outil web pour pratiquer toutes les questions du TOEFL Speaking avec enregistrement audio, transcription automatique, analyse IA et fiches de vocabulaire.
 
 Adaptation par Maël Le Guillouzic d'un projet de Lennart Rikk.
 Disponible pour usage personnel et éducatif uniquement.
@@ -34,7 +34,7 @@ cd TOEFL-PREP
 python -m venv venv
 # Pour activer l'environnement:
 source venv/bin/activate # (macOS/Linux)
-# Sur Windows: venv\Scripts\activate 
+# Sur Windows: venv\Scripts\activate
 
 # Vous pouvez tout installer (sauf ffmpeg, voir ci dessous)
 pip install -r requirements.txt
@@ -47,14 +47,22 @@ L'application sera accessible sur http://localhost:5001
 ## Fonctionnalités
 
 - Interface web LOCALE !
+- **Les 4 tâches du TOEFL Speaking** :
+  - Task 1 : Independent Speaking (15s prep, 45s speak)
+  - Task 2 : Campus Announcement (50s read, listen, 30s prep, 60s speak)
+  - Task 3 : Academic Concept (50s read, listen, 30s prep, 60s speak)
+  - Task 4 : Lecture Summary (listen, 20s prep, 60s speak)
+- **Mode test complet** : Enchaînez les 4 tâches d'affilée
+- **Mode entraînement individuel** : Pratiquez chaque tâche séparément
 - Transcription automatique avec Whisper (OpenAI)
-- **Feedback IA détaillé** avec GPT-4o-mini (devrait pas etre trop couteux, j'ai fait 4 test ca ma couté 1 centime)
+- **Feedback IA détaillé** avec GPT-4o-mini (devrait pas être trop coûteux, j'ai fait 4 tests ça m'a coûté 1 centime)
   - Évaluation sur l'échelle TOEFL (0-4)
   - Suggestions de vocabulaire avancé, et vous pouvez l'enregistrer comme une petite fiche ! (Avec recommandations de reformulation)
-- Sélection aléatoire de X questions parmi votre collection
-- Timers de préparation (15s) et de réponse (45s)
+- Sélection aléatoire ou manuelle de prompts
+- Gestion de vos propres textes et audios pour les tasks 2, 3 et 4
+- Timers automatiques selon chaque tâche
 - Comptage de mots et calcul du débit de parole
-- Sauvegarde des questions personnalisées
+- Sauvegarde des prompts personnalisés
 
 ---
 
@@ -75,7 +83,7 @@ cd TOEFL-PREP
 python -m venv venv
 # Pour activer l'environnement:
 source venv/bin/activate # (macOS/Linux)
-# Sur Windows: venv\Scripts\activate 
+# Sur Windows: venv\Scripts\activate
 
 # Vous pouvez tout installer (sauf ffmpeg, voir ci dessous)
 pip install -r requirements.txt
@@ -110,29 +118,39 @@ sudo apt-get install ffmpeg
 ### 1. Configuration initiale
 
 Sur la page d'accueil :
-- Modifiez les questions dans la zone dédiée (une question par ligne)
-- Cliquez sur **"Save Prompts"** pour sauvegarder. C'est save sur votre PC.
+- Allez dans l'onglet **"Customization"**
+- Ajoutez votre clé API OpenAI (optionnel mais recommandé)
+- Configurez vos prompts pour chaque tâche :
+  - **Task 1** : Entrez vos questions (une par ligne)
+  - **Task 2, 3, 4** : Créez des prompts avec textes et audios
 
-### 2. Pendant l'exercice
+### 2. Mode test complet
 
-1. Écoutez la question lue automatiquement (ou cliquez "Skip to Practice")
-2. **15 secondes** de préparation (un bip annonce le début de l'enregistrement)
-3. **45 secondes** de réponse (enregistrement automatique)
-4. Consultez la transcription et vos statistiques
-5. Si vous avez une clé API, recevez un feedback IA détaillé
-6. Téléchargez l'enregistrement MP3 si nécessaire
+1. Sur la page d'accueil, cliquez sur **"Start Test"**
+2. Faites les 4 tâches à la suite (15-20 minutes au total)
+3. Recevez vos résultats complets à la fin
 
-### 3. Navigation
+### 3. Mode entraînement individuel
 
-- **Next/Previous** : Passer entre les questions
-- **Restart** : Recommencer la question actuelle
-- **Reset** : Retourner à l'écran d'accueil
+1. Cliquez sur **"Practice Individual Tasks"**
+2. Sélectionnez la tâche que vous voulez pratiquer
+3. Configurez vos prompts ou laissez en mode aléatoire
+4. Pratiquez autant de fois que vous voulez
 
-### 4. Fiches de vocabulaire
+### 4. Pendant l'exercice
+
+- Pour **Task 1** : Écoutez la question, préparez-vous (15s), puis répondez (45s)
+- Pour **Task 2 et 3** : Lisez le texte (50s), écoutez l'audio, préparez-vous (30s), puis répondez (60s)
+- Pour **Task 4** : Écoutez l'audio, préparez-vous (20s), puis répondez (60s)
+- Consultez la transcription et vos statistiques
+- Si vous avez une clé API, recevez un feedback IA détaillé
+- Téléchargez vos enregistrements MP3 si nécessaire
+
+### 5. Fiches de vocabulaire
 
 - Pendant l'exercice, cliquez sur **"Save to Vocabulary Flashcards"** dans la section vocabulaire du feedback
 - Accédez à vos fiches via **"View My Vocabulary Flashcards"** sur la page d'accueil
-- Les fiches sont sauvegardées dans `vocabulary_cards.json` et accessibles depuis n'importe quel navigateur.
+- Les fiches sont sauvegardées dans `vocabulary_cards.json` et accessibles depuis n'importe quel navigateur
 
 ---
 
@@ -142,7 +160,7 @@ Sur la page d'accueil :
 2. Allez dans "API Keys" : https://platform.openai.com/api-keys
 3. Cliquez sur "Create new secret key"
 4. Copiez la clé (elle commence par `sk-...`)
-5. Collez-la dans le champ "OpenAI API Key" sur la page d'accueil.
+5. Collez-la dans le champ "OpenAI API Key" dans l'onglet Customization
 
 ---
 
@@ -171,6 +189,11 @@ L'application détecte automatiquement FFmpeg et affiche des instructions si non
 - Vérifiez que vous avez entré une clé API OpenAI valide
 - Vérifiez votre connexion internet
 - Consultez la console du terminal pour voir les erreurs
+
+### Les audios ne se chargent pas pour Task 2/3/4
+- Vérifiez que vous avez bien uploadé un fichier audio dans le modal de création de prompt
+- Les audios sont sauvegardés dans le dossier `static/task_audios/`
+- Formats acceptés : MP3, WAV, OGG, M4A
 
 ---
 
