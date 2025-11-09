@@ -890,6 +890,67 @@ audio {
     }
 }
 
+/* Task Selection Styles */
+.task-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.task-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    background: #e8ecef;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.task-checkbox:hover {
+    border-color: #2c5282;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(44, 82, 130, 0.1);
+}
+
+.task-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox-custom {
+    display: none;
+}
+
+.task-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #6c757d;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.task-checkbox input[type="checkbox"]:checked ~ .task-label {
+    color: white;
+    font-weight: 600;
+}
+
+.task-checkbox:has(input[type="checkbox"]:checked) {
+    background: linear-gradient(135deg, #2c5282 0%, #3d6ba8 100%);
+    border-color: #1e3a5f;
+    box-shadow: 0 3px 8px rgba(44, 82, 130, 0.3);
+}
+
+@media (max-width: 768px) {
+    .task-selection-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Modal Styles */
 .modal {
     display: none;

@@ -336,23 +336,46 @@ class CompleteTestManager {
         // Get API key
         this.apiKey = document.getElementById('apiKey').value;
 
+        // Get task selection
+        const task1Selected = document.getElementById('selectTask1').checked;
+        const task2Selected = document.getElementById('selectTask2').checked;
+        const task3Selected = document.getElementById('selectTask3').checked;
+        const task4Selected = document.getElementById('selectTask4').checked;
+        const task5Selected = document.getElementById('selectTask5').checked;
+        const task6Selected = document.getElementById('selectTask6').checked;
+
+        // Check if at least one task is selected
+        const errorSpan = document.getElementById('taskSelectionError');
+        if (!task1Selected && !task2Selected && !task3Selected && !task4Selected && !task5Selected && !task6Selected) {
+            errorSpan.style.display = 'block';
+            errorSpan.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+        errorSpan.style.display = 'none';
+
         // Get all content
         const task1Text = document.getElementById('task1Prompts').value.trim();
         this.task1Prompts = task1Text.split('\n').filter(p => p.trim());
 
-        // Validate content
+        // Validate content for selected tasks only
         const missing = [];
-        if (this.task1Prompts.length === 0) {
+        if (task1Selected && this.task1Prompts.length === 0) {
             missing.push('Task 1: Independent Speaking prompts');
         }
-        if (this.task2Prompts.length === 0) {
+        if (task2Selected && this.task2Prompts.length === 0) {
             missing.push('Task 2: No prompts available in the system');
         }
-        if (this.task3Prompts.length === 0) {
+        if (task3Selected && this.task3Prompts.length === 0) {
             missing.push('Task 3: No prompts available in the system');
         }
-        if (this.task4Prompts.length === 0) {
+        if (task4Selected && this.task4Prompts.length === 0) {
             missing.push('Task 4: No prompts available in the system');
+        }
+        if (task5Selected && this.task5Prompts.length === 0) {
+            missing.push('Task 5: No prompts available in the system');
+        }
+        if (task6Selected && this.task6Prompts.length === 0) {
+            missing.push('Task 6: No prompts available in the system');
         }
 
         // Show warning if missing content
@@ -368,6 +391,16 @@ class CompleteTestManager {
 
         // Hide warning and start test
         warningDiv.style.display = 'none';
+
+        // Store selected tasks
+        this.selectedTasks = [];
+        if (task1Selected) this.selectedTasks.push(1);
+        if (task2Selected) this.selectedTasks.push(2);
+        if (task3Selected) this.selectedTasks.push(3);
+        if (task4Selected) this.selectedTasks.push(4);
+        if (task5Selected) this.selectedTasks.push(5);
+        if (task6Selected) this.selectedTasks.push(6);
+
         this.startTest();
     }
 
@@ -423,22 +456,33 @@ class CompleteTestManager {
     }
 
     runNextTask() {
-        if (this.currentTaskIndex >= 4) {
-            // All tasks completed, show results
+        if (this.currentTaskIndex >= this.selectedTasks.length) {
+            // All selected tasks completed, show results
             this.showFinalResults();
             return;
         }
 
-        const taskNum = this.currentTaskIndex + 1;
-        document.getElementById('currentTaskNum').textContent = taskNum;
+        const taskNum = this.selectedTasks[this.currentTaskIndex];
+        const displayIndex = this.currentTaskIndex + 1;
+        document.getElementById('currentTaskNum').textContent = displayIndex;
 
-        const taskNames = [
-            'Independent Speaking',
-            'Campus Announcement',
-            'Academic Concept',
-            'Lecture Summary'
-        ];
-        document.getElementById('currentTaskName').textContent = taskNames[this.currentTaskIndex];
+        const taskNames = {
+            1: 'Independent Speaking',
+            2: 'Campus Announcement',
+            3: 'Academic Concept',
+            4: 'Lecture Summary',
+            5: 'Integrated Writing',
+            6: 'Academic Discussion'
+        };
+
+        const totalTasks = this.selectedTasks.length;
+        document.getElementById('currentTaskName').textContent = taskNames[taskNum];
+
+        // Update the progress display
+        const progressContainer = document.querySelector('.test-progress h2');
+        if (progressContainer) {
+            progressContainer.innerHTML = `Task <span id="currentTaskNum">${displayIndex}</span> of ${totalTasks}: <span id="currentTaskName">${taskNames[taskNum]}</span>`;
+        }
 
         // Run the appropriate task
         if (taskNum === 1) {
@@ -449,6 +493,10 @@ class CompleteTestManager {
             this.runTask3();
         } else if (taskNum === 4) {
             this.runTask4();
+        } else if (taskNum === 5) {
+            this.runTask5();
+        } else if (taskNum === 6) {
+            this.runTask6();
         }
     }
 

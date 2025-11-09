@@ -52,16 +52,23 @@ L'application sera accessible sur http://localhost:5001
   - Task 2 : Campus Announcement (50s read, listen, 30s prep, 60s speak)
   - Task 3 : Academic Concept (50s read, listen, 30s prep, 60s speak)
   - Task 4 : Lecture Summary (listen, 20s prep, 60s speak)
-- **Mode test complet** : Enchaînez les 4 tâches d'affilée
+- **Les 2 tâches du TOEFL Writing** :
+  - Task 5 : Integrated Writing (3min read, listen, 20min write, 150-225 words)
+  - Task 6 : Academic Discussion (3min read, 10min write, minimum 100 words)
+- **Mode test complet** : Enchaînez les 6 tâches d'affilée (ou sélectionnez celles que vous voulez pratiquer)
 - **Mode entraînement individuel** : Pratiquez chaque tâche séparément
-- Transcription automatique avec Whisper (OpenAI)
+- Transcription automatique avec Whisper (OpenAI) pour les tâches Speaking
 - **Feedback IA détaillé** avec GPT-4o-mini (devrait pas être trop coûteux, j'ai fait 4 tests ça m'a coûté 1 centime)
-  - Évaluation sur l'échelle TOEFL (0-4)
+  - Évaluation sur l'échelle TOEFL (0-5 + note sur 100)
+  - Focus sur les "low-frequency words" - vocabulaire sophistiqué qui impressionne les correcteurs
   - Suggestions de vocabulaire avancé, et vous pouvez l'enregistrer comme une petite fiche ! (Avec recommandations de reformulation)
+  - Transitions et phrases qui font la différence entre une note moyenne et une excellente note
+- **Sélection flexible des tâches** : Choisissez quelles tâches inclure dans votre test complet
 - Sélection aléatoire ou manuelle de prompts
-- Gestion de vos propres textes et audios pour les tasks 2, 3 et 4
+- Gestion de vos propres textes et audios pour les tasks 2, 3, 4 et 5
+- Gestion de vos propres discussions pour la task 6
 - Timers automatiques selon chaque tâche
-- Comptage de mots et calcul du débit de parole
+- Comptage de mots et calcul du débit de parole (Speaking) ou nombre de mots (Writing)
 - Sauvegarde des prompts personnalisés
 
 ---
@@ -120,14 +127,16 @@ sudo apt-get install ffmpeg
 Sur la page d'accueil :
 - Allez dans l'onglet **"Customization"**
 - Ajoutez votre clé API OpenAI (optionnel mais recommandé)
+- **Sélection des tâches** : Cochez les tâches que vous voulez inclure dans votre test
 - Configurez vos prompts pour chaque tâche :
   - **Task 1** : Entrez vos questions (une par ligne)
-  - **Task 2, 3, 4** : Créez des prompts avec textes et audios
+  - **Task 2, 3, 4, 5** : Créez des prompts avec textes et audios
+  - **Task 6** : Créez des discussions avec question du professeur et réponses d'étudiants
 
 ### 2. Mode test complet
 
 1. Sur la page d'accueil, cliquez sur **"Start Test"**
-2. Faites les 4 tâches à la suite (15-20 minutes au total)
+2. Faites les tâches que vous avez sélectionnées (temps variable selon votre sélection)
 3. Recevez vos résultats complets à la fin
 
 ### 3. Mode entraînement individuel
@@ -139,12 +148,23 @@ Sur la page d'accueil :
 
 ### 4. Pendant l'exercice
 
+**Speaking Tasks:**
 - Pour **Task 1** : Écoutez la question, préparez-vous (15s), puis répondez (45s)
 - Pour **Task 2 et 3** : Lisez le texte (50s), écoutez l'audio, préparez-vous (30s), puis répondez (60s)
 - Pour **Task 4** : Écoutez l'audio, préparez-vous (20s), puis répondez (60s)
 - Consultez la transcription et vos statistiques
-- Si vous avez une clé API, recevez un feedback IA détaillé
 - Téléchargez vos enregistrements MP3 si nécessaire
+
+**Writing Tasks:**
+- Pour **Task 5** : Lisez le passage (3min), écoutez la lecture, puis écrivez (20min, 150-225 mots)
+- Pour **Task 6** : Lisez la discussion (3min), puis écrivez votre contribution (10min, minimum 100 mots)
+- Le nombre de mots est compté automatiquement
+- Vous pouvez consulter le passage/discussion pendant que vous écrivez
+
+**Feedback IA:**
+- Si vous avez une clé API, recevez un feedback IA détaillé pour toutes les tâches
+- Focus sur le vocabulaire sophistiqué ("low-frequency words") qui impressionne les correcteurs
+- Note sur l'échelle TOEFL (0-5) + note sur 100
 
 ### 5. Fiches de vocabulaire
 

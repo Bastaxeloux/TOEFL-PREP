@@ -42,10 +42,10 @@ temp_recording.*
 .env
 .env.local
 
-# User data files (don't commit personal data)
-data/
-!data/task*/prompts.json
-!data/task*/audio/.gitkeep
+# User data files - Allow prompts and audio to be shared
+data/config.json
+data/vocabulary_cards.json
+data/uploads/
 
 # Legacy files (for migration)
 prompts.txt

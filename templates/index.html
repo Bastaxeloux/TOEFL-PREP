@@ -25,12 +25,16 @@
             <!-- Instructions Tab Content -->
             <div id="instructionsContent" class="tab-content active">
                 <div class="task-instructions">
-                    <p><strong>This complete test includes all 4 TOEFL Speaking tasks in order:</strong></p>
+                    <p><strong>This complete test includes all TOEFL Speaking and Writing tasks:</strong></p>
+                    <p><strong>Speaking Tasks:</strong></p>
                     <p><strong>Task 1</strong>: Independent Speaking (15s Prep, 45s Speak)</p>
                     <p><strong>Task 2</strong>: Campus Announcement (50s Read, Listen, 30s prep, 60s speak)</p>
                     <p><strong>Task 3</strong>: Academic Concept (50s Read, Listen, 30s prep, 60s speak)</p>
                     <p><strong>Task 4</strong>: Lecture Summary (Listen, 20s prep, 60s speak)</p>
-                    <p><strong>Total time: 15-20 minutes</strong></p>
+                    <p><strong>Writing Tasks:</strong></p>
+                    <p><strong>Task 5</strong>: Integrated Writing (3 min read, listen, 20 min write)</p>
+                    <p><strong>Task 6</strong>: Academic Discussion (3 min read, 10 min write)</p>
+                    <p><strong>Total time: 45-50 minutes</strong></p>
                     <p style="margin-top: 20px; color: #666;"><em>All tasks will use random prompts. To customize specific prompts or add your API key, go to the Customization tab.</em></p>
                 </div>
 
@@ -64,6 +68,44 @@
                             <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
                             <button id="saveApiKeyBtn" class="btn btn-success btn-compact">Save</button>
                         </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px; text-align: center;">Task Selection</h3>
+                    <div class="config-item">
+                        <label style="margin-bottom: 15px;">Select which tasks to include in your test:</label>
+                        <div class="task-selection-grid">
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask1" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 1: Independent Speaking</span>
+                            </label>
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask2" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 2: Campus Announcement</span>
+                            </label>
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask3" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 3: Academic Concept</span>
+                            </label>
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask4" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 4: Lecture Summary</span>
+                            </label>
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask5" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 5: Integrated Writing</span>
+                            </label>
+                            <label class="task-checkbox">
+                                <input type="checkbox" id="selectTask6" checked>
+                                <span class="checkbox-custom"></span>
+                                <span class="task-label">Task 6: Academic Discussion</span>
+                            </label>
+                        </div>
+                        <span class="config-hint" style="color: #d9534f; display: none;" id="taskSelectionError">Please select at least one task</span>
                     </div>
 
                     <h3 style="margin-top: 30px; text-align: center;">Task Content Setup</h3>
@@ -112,6 +154,34 @@
                             <button id="task4EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
                         </div>
                         <div id="task4Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
+                            <em>Random mode - a prompt will be selected when you start</em>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label for="task5PromptSelect">Task 5 - Integrated Writing:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <select id="task5PromptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Random Prompt --</option>
+                            </select>
+                            <button id="task5NewBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                            <button id="task5EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                        </div>
+                        <div id="task5Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
+                            <em>Random mode - a prompt will be selected when you start</em>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label for="task6PromptSelect">Task 6 - Academic Discussion:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <select id="task6PromptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                                <option value="">-- Random Prompt --</option>
+                            </select>
+                            <button id="task6NewBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                            <button id="task6EditBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                        </div>
+                        <div id="task6Display" style="padding: 10px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; color: #666; margin-top: 5px;">
                             <em>Random mode - a prompt will be selected when you start</em>
                         </div>
                     </div>

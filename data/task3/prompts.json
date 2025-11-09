@@ -1,0 +1,32 @@
+{
+  "prompts": [
+    {
+      "id": 1,
+      "reading": "Social Impact Framing\n\nSocial impact framing is a communication approach employed by companies to influence public perception and enhance their corporate image. This technique involves carefully managing the public perception of their activities by emphasizing their positive social contributions while reducing potential criticisms. Companies use language, visuals, and storytelling to position themselves as champions of social causes and align their brand with values that resonate with consumers. By employing social impact framing, businesses seek to build trust, enhance brand loyalty, and attract consumers that care deeply about social issues.",
+      "audio_file": "Social-Impact-Framing.mp3",
+      "notes": "",
+      "question": "Using the examples from the lecture, explain the concept of social impact framing."
+    },
+    {
+      "id": 2,
+      "reading": "Convergent Evolution\n\nEvolution is the process in which, over time, animals develop the characteristics required to survive in their natural environment. One form of this is convergent evolution, which is when animals living in completely separate geographic areas end up with many identical features.  This occurs when the habitats of two creatures resemble each other  in some way.  Because they live in similar habitats, the animals end up needing similar specialties in order to survive and reproduce.  In certain cases the animals are so alike that they may end up being mistaken for each other, while in other cases they only share a few features. ",
+      "audio_file": "Recording-37-online-audio-converter.com_.mp3",
+      "notes": "",
+      "question": "Using the details and examples given in the listening, explain the concept of convergent evolution."
+    },
+    {
+      "id": 3,
+      "reading": "Confirmation Bias\n\nConfirmation bias occurs when people focus on information that supports their existing beliefs while ignoring information that contradicts them. This tendency can affect how people think and make decisions, often leading them to reinforce their existing opinions instead of questioning them. For example, when doing research, people might only pay attention to studies or facts that match their ideas and ignore those that don’t. This bias can limit a person’s ability to see the bigger picture or to consider alternative viewpoints, which are essential for making balanced decisions.",
+      "audio_file": "ElevenLabs_Untitled_Project-1.mp3",
+      "notes": "",
+      "question": "Using the professor’s example, explain how confirmation bias affects decision making."
+    },
+    {
+      "id": 4,
+      "reading": "Anchoring Effect\n\nThe anchoring effect is a psychological bias where people rely too heavily on the first piece of information they encounter—called the anchor—when making decisions. This can happen even if the anchor is unrelated or not entirely accurate. Once the anchor is introduced, it influences how people interpret and evaluate other information. For example, in conversations, the first suggestion or idea often frames the discussion and affects the final outcome. The anchoring effect can shape perceptions in areas like decision-making, problem-solving, and negotiations.",
+      "audio_file": "ElevenLabs_Anch.mp3",
+      "notes": "",
+      "question": "Using the examples in the lecture, explain how the anchoring effect influences decision making."
+    }
+  ]
+}

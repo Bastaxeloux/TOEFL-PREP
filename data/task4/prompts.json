@@ -1,0 +1,25 @@
+{
+  "prompts": [
+    {
+      "id": 1,
+      "question": "Using the examples given in the lecture, explain two ways that animals survive in environments with low levels of light.",
+      "audio_file": "Low_light_animals.mp3",
+      "notes": "",
+      "topic": ""
+    },
+    {
+      "id": 2,
+      "question": "Using the examples of the fennec fox and the kangaroo rat, explain how some animals survive in desert environments.",
+      "audio_file": "desert-animals-lecture.mp3",
+      "notes": "",
+      "topic": ""
+    },
+    {
+      "id": 3,
+      "question": "Using points and examples from the lecture, explain two ways that plants use the wind to spread their seeds.",
+      "audio_file": "ElevenLabs_Untitled_Project-2.mp3",
+      "notes": "",
+      "topic": ""
+    }
+  ]
+}

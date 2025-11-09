@@ -1,0 +1,34 @@
+{
+  "prompts": [
+    {
+      "id": 1,
+      "reading": "Mandatory Quiet Hours\n\nI propose that the university implement mandatory quiet hours in all dormitories from 10 PM to 8 AM. This policy would create a better environment for students who need to study at night without being disturbed by noise from other residents. Currently, many students struggle to focus on their assignments and review their textbooks due to loud music, conversations, or other activities in the dorms late at night. Not only that, but quiet hours would ensure everyone can get enough sleep at night, ultimately improving everyone's overall well-being.\n\nSincerely,\n\nSarah Thompson",
+      "audio_file": "Mandatory_Quiet_Hours.mp3",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "reading": "End Library Tours\n\nI would like to propose that campus tours for prospective students no longer include a visit to the university library. While I understand the importance of showcasing campus facilities, the presence of large groups of visitors in the library is often distracting to students who are trying to study or complete assignments.  This is especially problematic during exams or at the end of a semester when students need to complete final assignments. Furthermore, the library’s website provides detailed information about the services, and study spaces available. Prospective students can easily access the website from home without disrupting current students.\n\nSincerely,\n\nAdam Robinson",
+      "audio_file": "ElevenLabs_Library_Tours-2.mp3",
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "reading": "Campus Fitness Center to Close\n\nThe campus fitness center will permanently close at the end of this semester. This decision was made by the university administration in coordination with representatives of the student’s association. Unfortunately, the building currently housing the center is very old and the university can no longer afford the cost of maintaining it or providing heat and air conditioning as required. Furthermore, the popularity of the center has declined since the university formed partnerships with several private fitness centers in the city. These partnerships mean that all full and part time students can access five privately owned gyms across the city at no cost.",
+      "audio_file": "Type-2-online-audio-converter.com_.mp3",
+      "notes": ""
+    },
+    {
+      "id": 4,
+      "reading": "Restricting Coffee in the Library\n\nStarting next semester, students will no longer be allowed to bring coffee or other beverages into the library. University officials have announced that this change aims to protect library resources, as over the past year, several books, computers, and desks have been damaged by spilled drinks, leading to costly repairs and replacements. Additionally, the university plans to create a coffee lounge in the student center, where students can enjoy drinks while studying in a more relaxed and social environment. The administration believes this will maintain the library’s functionality while still accommodating students’ needs.\n\n",
+      "audio_file": "ElevenLabs_Untitled_Project.mp3",
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "reading": "Replacing Dormitory Kitchens with Study Rooms\n\nThe university has announced plans to convert the small kitchens in all of the dormitories into study rooms by the start of next semester. The decision was made because the kitchens are underutilized; a recent survey showed that most students prefer eating at the dining hall, ordering takeout, or using nearby restaurants. Additionally, university officials believe that having more designated study spaces in the dorms will help students concentrate better on their coursework and improve their academic performance, especially during exams when the campus library is often overcrowded.",
+      "audio_file": "ElevenLabs_Dorm_kitchen.mp3",
+      "notes": ""
+    }
+  ]
+}

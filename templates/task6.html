@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEFL Task 6 - Academic Discussion</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="app" class="toefl-container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="screen">
+            <div class="header-logo-container">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="TOEFL Logo" class="page-logo">
+            </div>
+            <h1 class="toefl-header">Task 6: Academic Discussion</h1>
+
+            <div class="task-instructions">
+                <p><strong>Format:</strong> Read discussion (3 min) → Write (10 min)</p>
+                <p>You will read a professor's question and two student responses, then write your own response (at least 100 words) contributing to the online discussion.</p>
+            </div>
+
+            <div class="config-section">
+                <div class="config-item">
+                    <label for="apiKey">OpenAI API Key (required for evaluation):</label>
+                    <div class="api-key-input-group">
+                        <input type="password" id="apiKey" placeholder="sk-..." value="{{ api_key }}">
+                        <button id="saveApiKeyBtn" class="btn btn-success btn-compact">Save</button>
+                    </div>
+                </div>
+
+                <div class="config-item">
+                    <label for="promptSelect">Select Prompt:</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <select id="promptSelect" style="flex: 1; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px;">
+                            <option value="">-- Random Prompt --</option>
+                        </select>
+                        <button id="newPromptBtn" class="btn btn-success" style="white-space: nowrap;">New Prompt</button>
+                        <button id="editPromptBtn" class="btn" style="background-color: #007bff; color: white; white-space: nowrap;">Edit</button>
+                    </div>
+                </div>
+
+                <div class="config-item">
+                    <label>Discussion Prompt:</label>
+                    <div id="discussionDisplay" style="padding: 15px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; min-height: 200px; white-space: pre-wrap; font-family: inherit; line-height: 1.6; color: #333;">
+                        <em style="color: #999;">Random mode - content will be selected when you start the task</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="startTaskButton" class="btn btn-primary btn-highlight">Start Task</button>
+                <button onclick="window.location.href='/other-tasks'" class="btn btn-warning">Back to Task Menu</button>
+            </div>
+            <div id="saveMessage" class="save-message"></div>
+        </div>
+
+        <!-- Practice Screen -->
+        <div id="practiceScreen" class="screen" style="display: none;">
+            <h1 class="toefl-header">Task 6: Academic Discussion</h1>
+
+            <!-- Reading Phase -->
+            <div id="readingPhase" class="phase-section" style="display: none;">
+                <h2>Reading Time: <span id="readingTimer">180</span>s</h2>
+                <div class="discussion-content" id="discussionContent" style="padding: 20px; background-color: #f9f9f9; border: 2px solid #ddd; border-radius: 6px;"></div>
+            </div>
+
+            <!-- Writing Phase -->
+            <div id="writingPhase" class="phase-section" style="display: none;">
+                <h2>Writing Time: <span id="writingTimer">600</span>s (10 minutes)</h2>
+                <div style="display: flex; gap: 15px; margin-bottom: 10px; align-items: center;">
+                    <button id="showDiscussionBtn" class="btn btn-secondary" style="font-size: 14px;">Show Discussion</button>
+                    <span style="color: #666; font-size: 14px;">Word count: <strong id="wordCount">0</strong></span>
+                </div>
+                <div class="toefl-prompt" style="margin-bottom: 15px; padding: 15px; background-color: #f5f5f5; border: 2px solid #333; border-radius: 4px;">
+                    <p><strong>Directions:</strong> You have 10 minutes to write a response that contributes to the discussion. An effective response will contain at least 100 words.</p>
+                </div>
+                <textarea id="writingArea" style="width: 100%; min-height: 350px; padding: 15px; border: 2px solid #333; font-family: 'Georgia', 'Times New Roman', serif; font-size: 16px; line-height: 1.6; resize: vertical; box-sizing: border-box;" placeholder="Type your response here..."></textarea>
+                <div class="button-container" style="margin-top: 15px;">
+                    <button id="submitWritingBtn" class="btn btn-primary">Submit Response</button>
+                </div>
+            </div>
+
+            <!-- Results Phase -->
+            <div id="resultsPhase" class="phase-section" style="display: none;">
+                <h2>Your Response</h2>
+                <div class="config-item" style="margin-bottom: 20px;">
+                    <label>Your Post:</label>
+                    <div id="submittedText" style="padding: 15px; background-color: #f5f5f5; border: 2px solid #ccc; border-radius: 4px; white-space: pre-wrap; font-family: 'Georgia', 'Times New Roman', serif; line-height: 1.6;"></div>
+                </div>
+                <div id="evaluationResults" class="progress-container"></div>
+                <div class="button-container">
+                    <button id="resetButton" class="btn btn-warning">Try Again</button>
+                    <button onclick="window.location.href='/other-tasks'" class="btn btn-primary">Back to Task Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for creating/editing prompts -->
+        <div id="promptModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">New Prompt</h2>
+                    <span class="modal-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="config-item">
+                        <label for="modalProfessorName">Professor Name:</label>
+                        <input type="text" id="modalProfessorName" placeholder="e.g., Dr. Smith" style="width: 100%; padding: 10px; border: 2px solid #333; font-size: 14px; border-radius: 4px;">
+                    </div>
+                    <div class="config-item">
+                        <label for="modalProfessorQuestion">Professor's Question:</label>
+                        <textarea id="modalProfessorQuestion" rows="4" placeholder="Enter the professor's question for the discussion..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="modalStudent1Name">Student 1 Name:</label>
+                        <input type="text" id="modalStudent1Name" placeholder="e.g., Andrew" style="width: 100%; padding: 10px; border: 2px solid #333; font-size: 14px; border-radius: 4px;">
+                    </div>
+                    <div class="config-item">
+                        <label for="modalStudent1Response">Student 1 Response:</label>
+                        <textarea id="modalStudent1Response" rows="4" placeholder="Enter the first student's response..."></textarea>
+                    </div>
+                    <div class="config-item">
+                        <label for="modalStudent2Name">Student 2 Name:</label>
+                        <input type="text" id="modalStudent2Name" placeholder="e.g., Claire" style="width: 100%; padding: 10px; border: 2px solid #333; font-size: 14px; border-radius: 4px;">
+                    </div>
+                    <div class="config-item">
+                        <label for="modalStudent2Response">Student 2 Response:</label>
+                        <textarea id="modalStudent2Response" rows="4" placeholder="Enter the second student's response..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modalDeleteBtn" class="btn" style="background-color: #dc3545; color: white; margin-right: auto;">Delete</button>
+                    <button id="modalCancelBtn" class="btn">Cancel</button>
+                    <button id="modalSaveBtn" class="btn btn-success">Save Prompt</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for showing discussion during writing -->
+        <div id="discussionModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Discussion</h2>
+                    <span class="modal-close" data-modal="discussionModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="modalDiscussionContent" style="white-space: pre-wrap; font-family: inherit; line-height: 1.6;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" onclick="document.getElementById('discussionModal').style.display='none'">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="github-link">
+            <p>Open source project - <a href="https://github.com/Bastaxeloux/TOEFL-PREP" target="_blank">View on GitHub</a></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='task6.js') }}"></script>
+</body>
+</html>

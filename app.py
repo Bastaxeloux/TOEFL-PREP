@@ -32,21 +32,30 @@ DATA_DIR.mkdir(exist_ok=True)
 TASK2_DIR = DATA_DIR / 'task2'
 TASK3_DIR = DATA_DIR / 'task3'
 TASK4_DIR = DATA_DIR / 'task4'
+TASK5_DIR = DATA_DIR / 'task5'
+TASK6_DIR = DATA_DIR / 'task6'
 
-for task_dir in [TASK2_DIR, TASK3_DIR, TASK4_DIR]:
+for task_dir in [TASK2_DIR, TASK3_DIR, TASK4_DIR, TASK5_DIR]:
     task_dir.mkdir(exist_ok=True)
     (task_dir / 'audio').mkdir(exist_ok=True)
+
+# Task 6 doesn't use audio
+TASK6_DIR.mkdir(exist_ok=True)
 
 # File paths
 PROMPTS_FILE = Path(__file__).parent / 'prompts.txt'  # Task 1 uses plain text
 TASK2_PROMPTS = TASK2_DIR / 'prompts.json'
 TASK3_PROMPTS = TASK3_DIR / 'prompts.json'
 TASK4_PROMPTS = TASK4_DIR / 'prompts.json'
+TASK5_PROMPTS = TASK5_DIR / 'prompts.json'
+TASK6_PROMPTS = TASK6_DIR / 'prompts.json'
 
 # Legacy aliases for task files
 TASK2_FILE = TASK2_PROMPTS
 TASK3_FILE = TASK3_PROMPTS
 TASK4_FILE = TASK4_PROMPTS
+TASK5_FILE = TASK5_PROMPTS
+TASK6_FILE = TASK6_PROMPTS
 
 # Other files
 VOCABULARY_FILE = DATA_DIR / 'vocabulary_cards.json'
@@ -54,9 +63,9 @@ CONFIG_FILE = DATA_DIR / 'config.json'
 UPLOADS_DIR = DATA_DIR / 'uploads'
 UPLOADS_DIR.mkdir(exist_ok=True)
 
-# Helper functions for JSON prompt management (Tasks 2, 3, 4 only)
+# Helper functions for JSON prompt management (Tasks 2, 3, 4, 5, 6)
 def load_task_prompts(task_num):
-    """Load prompts for a specific task from JSON (Task 2, 3, 4 only)"""
+    """Load prompts for a specific task from JSON (Task 2, 3, 4, 5, 6)"""
     if task_num == 1:
         # Task 1 uses plain text file
         return {"prompts": []}
@@ -64,7 +73,9 @@ def load_task_prompts(task_num):
     prompt_files = {
         2: TASK2_PROMPTS,
         3: TASK3_PROMPTS,
-        4: TASK4_PROMPTS
+        4: TASK4_PROMPTS,
+        5: TASK5_PROMPTS,
+        6: TASK6_PROMPTS
     }
 
     file_path = prompt_files.get(task_num)
@@ -79,7 +90,7 @@ def load_task_prompts(task_num):
         return {"prompts": []}
 
 def save_task_prompts(task_num, data):
-    """Save prompts for a specific task to JSON (Task 2, 3, 4 only)"""
+    """Save prompts for a specific task to JSON (Task 2, 3, 4, 5, 6)"""
     if task_num == 1:
         # Task 1 uses plain text file
         return False
@@ -87,7 +98,9 @@ def save_task_prompts(task_num, data):
     prompt_files = {
         2: TASK2_PROMPTS,
         3: TASK3_PROMPTS,
-        4: TASK4_PROMPTS
+        4: TASK4_PROMPTS,
+        5: TASK5_PROMPTS,
+        6: TASK6_PROMPTS
     }
 
     file_path = prompt_files.get(task_num)
@@ -107,7 +120,9 @@ def get_audio_dir(task_num):
     audio_dirs = {
         2: TASK2_DIR / 'audio',
         3: TASK3_DIR / 'audio',
-        4: TASK4_DIR / 'audio'
+        4: TASK4_DIR / 'audio',
+        5: TASK5_DIR / 'audio'
+        # Task 6 does not use audio
     }
     return audio_dirs.get(task_num)
 
@@ -476,13 +491,37 @@ def evaluate():
         if not api_key:
             return jsonify({'error': 'No API key provided'}), 400
 
+        # Load existing vocabulary cards to avoid repetition
+        vocab_context = ""
+        try:
+            vocab_file = Path('vocabulary_cards.json')
+            if vocab_file.exists():
+                with open(vocab_file, 'r', encoding='utf-8') as f:
+                    vocab_cards = json.load(f)
+                    if vocab_cards:
+                        # Extract unique words/phrases that have been suggested before
+                        previous_suggestions = set()
+                        for card in vocab_cards:
+                            content = card.get('content', '')
+                            # Simple extraction - look for quoted words in "Instead of"
+                            import re
+                            matches = re.findall(r'Instead of ["\']([^"\']+)["\']', content)
+                            previous_suggestions.update(matches)
+
+                        if previous_suggestions:
+                            vocab_context = f"\n\n**IMPORTANT - Previous Vocabulary Work:**\nYou have already suggested alternatives for: {', '.join(list(previous_suggestions)[:15])}.\nIt's okay to mention them ONCE if they reappear, but PRIORITIZE NEW, DIFFERENT vocabulary. Focus on variety and progression to build a comprehensive vocabulary toolkit."
+        except:
+            pass
+
         # Initialize OpenAI client
         client = OpenAI(api_key=api_key)
 
         # Create evaluation prompt
         wpm = (word_count / speaking_time * 60) if speaking_time > 0 else 0
 
-        prompt = f"""You are an experienced TOEFL speaking evaluator. Evaluate this TOEFL Independent Speaking response.
+        prompt = f"""You are an experienced TOEFL speaking evaluator. Your MISSION: Help this student achieve the HIGHEST possible TOEFL score by teaching them HIGH-IMPACT vocabulary and expressions that IMPRESS graders.
+
+**CRITICAL FOCUS:** "Low-frequency words" - sophisticated, academic vocabulary that demonstrates advanced proficiency. These are the words that distinguish a score of 3 from a score of 5. Avoid common words - we want TOEFL power vocabulary!{vocab_context}
 
 **Question:** {question}
 
@@ -496,9 +535,10 @@ def evaluate():
 **Your task:**
 Provide a detailed evaluation following this structure:
 
-1. **Overall Score** (0-4 scale):
-   - Give a score from 0 to 4 (TOEFL scale)
-   - Briefly explain the score
+1. **Overall Score**:
+   - Give TWO scores: (1) TOEFL scale 0-5, (2) Percentage score 0-100
+   - Format: "Score: X/5 (Y/100)"
+   - Briefly explain both scores
 
 2. **Strengths** (What was done well):
    - List 2-3 specific positive points
@@ -513,20 +553,23 @@ Provide a detailed evaluation following this structure:
    - Were ideas developed with examples/reasons?
    - Suggest what additional ideas/examples could have been included
 
-5. **Language & Vocabulary**:
-   - Identify any repetitive or basic words/phrases used
-   - For EACH word/phrase identified, suggest 3-5 alternative advanced synonyms
-   - Example format: "Instead of 'good', try: beneficial, advantageous, favorable"
-   - Also provide 2-3 REPHRASING examples: show how they could have expressed their ideas better
-   - Format rephrasing as: "You said: '[quote from transcript]' → You could say: '[improved version]'"
-   - Focus on vocabulary that would improve their TOEFL score
+5. **Language & Vocabulary - HIGH-IMPACT FOCUS**:
+   - Identify BASIC or REPETITIVE words/phrases
+   - For EACH word, suggest 3-5 LOW-FREQUENCY alternatives that TOEFL graders value
+   - Prioritize: academic vocabulary, precise verbs, sophisticated connectors, nuanced expressions
+   - Example: Instead of "important", suggest: pivotal, instrumental, paramount, consequential
+   - Provide 2-3 REPHRASING examples with ADVANCED vocabulary
+   - Format: "You said: '[quote]' → Better: '[sophisticated version with low-frequency words]'"
+   - **BONUS:** Suggest 2-3 POWER TRANSITIONS/PHRASES that impress graders (e.g., "Furthermore,", "It is worth noting that", "This exemplifies")
 
 6. **Grammar & Fluency**:
    - Note any grammatical errors (with corrections)
    - Comment on sentence variety and complexity
+   - Suggest ONE advanced grammatical structure they could incorporate next time
 
-7. **Recommendations**:
-   - Give 2-3 specific actionable tips for next time
+7. **Recommendations for Score Improvement**:
+   - Give 2-3 SPECIFIC, ACTIONABLE tactics to boost their score
+   - Focus on what makes the difference between a 3 and a 5
 
 Format your response in clear HTML with the following EXACT structure:
 - Use <h4> tags for EACH section title (Overall Score, Strengths, Areas for Improvement, Content & Development, Language & Vocabulary, Grammar & Fluency, Recommendations)
@@ -684,10 +727,24 @@ def task4():
 
     return render_template('task4.html', api_key=api_key, saved_notes=saved_notes)
 
+@app.route('/task5')
+def task5():
+    """Render Task 5 (Integrated Writing) page"""
+    config = load_config()
+    api_key = config.get('api_key', '')
+    return render_template('task5.html', api_key=api_key)
+
+@app.route('/task6')
+def task6():
+    """Render Task 6 (Academic Discussion) page"""
+    config = load_config()
+    api_key = config.get('api_key', '')
+    return render_template('task6.html', api_key=api_key)
+
 @app.route('/api/task/<int:task_num>/prompts/list')
 def list_prompts(task_num):
     """List all prompts for a specific task"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -699,7 +756,7 @@ def list_prompts(task_num):
 @app.route('/api/task/<int:task_num>/prompts/<int:prompt_id>')
 def get_prompt(task_num, prompt_id):
     """Get a specific prompt by ID"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -714,7 +771,7 @@ def get_prompt(task_num, prompt_id):
 @app.route('/api/task/<int:task_num>/prompts', methods=['POST'])
 def create_prompt(task_num):
     """Create a new prompt"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -754,7 +811,7 @@ def create_prompt(task_num):
 @app.route('/api/task/<int:task_num>/prompts/<int:prompt_id>', methods=['PUT'])
 def update_prompt(task_num, prompt_id):
     """Update an existing prompt"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -804,7 +861,7 @@ def update_prompt(task_num, prompt_id):
 @app.route('/api/task/<int:task_num>/prompts/<int:prompt_id>', methods=['DELETE'])
 def delete_prompt(task_num, prompt_id):
     """Delete a prompt"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -876,7 +933,7 @@ def task_content(task_num):
 @app.route('/api/task/<int:task_num>/upload_audio', methods=['POST'])
 def upload_task_audio(task_num):
     """Upload audio file for a specific task"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -919,7 +976,7 @@ def upload_task_audio(task_num):
 @app.route('/api/task/<int:task_num>/audio/list')
 def list_task_audio(task_num):
     """List all available audio files for a specific task"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -950,7 +1007,7 @@ def list_task_audio(task_num):
 @app.route('/api/task/<int:task_num>/audio')
 def get_task_audio(task_num):
     """Serve the audio file for a specific task"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -984,7 +1041,7 @@ def get_task_audio(task_num):
 @app.route('/api/task/<int:task_num>/audio/<filename>')
 def serve_task_audio_file(task_num, filename):
     """Serve a specific audio file from task's audio directory"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -1004,7 +1061,7 @@ def serve_task_audio_file(task_num, filename):
 @app.route('/api/task/<int:task_num>/evaluate', methods=['POST'])
 def evaluate_task(task_num):
     """Evaluate a task response using OpenAI"""
-    if task_num not in [2, 3, 4]:
+    if task_num not in [2, 3, 4, 5, 6]:
         return jsonify({'error': 'Invalid task number'}), 400
 
     try:
@@ -1016,15 +1073,50 @@ def evaluate_task(task_num):
         if not api_key:
             return jsonify({'error': 'API key is required'}), 400
 
+        # Load existing vocabulary cards to avoid repetition
+        vocab_context = ""
+        try:
+            vocab_file = Path('vocabulary_cards.json')
+            if vocab_file.exists():
+                with open(vocab_file, 'r', encoding='utf-8') as f:
+                    vocab_cards = json.load(f)
+                    if vocab_cards:
+                        # Extract unique words/phrases that have been suggested before
+                        previous_suggestions = set()
+                        for card in vocab_cards:
+                            content = card.get('content', '')
+                            # Simple extraction - look for quoted words in "Instead of"
+                            import re
+                            matches = re.findall(r'Instead of ["\']([^"\']+)["\']', content)
+                            previous_suggestions.update(matches)
+
+                        if previous_suggestions:
+                            vocab_context = f"\n\n**IMPORTANT - Previous Vocabulary Work:**\nYou have already suggested alternatives for: {', '.join(list(previous_suggestions)[:15])}.\nIt's okay to mention them ONCE if they reappear, but PRIORITIZE NEW, DIFFERENT vocabulary. Focus on variety and progression."
+        except:
+            pass
+
         client = OpenAI(api_key=api_key)
 
-        transcript = data.get('transcript', '')
-        word_count = data.get('word_count', 0)
-        speaking_time = data.get('speaking_time', 0)
-        reading_text = data.get('reading_text', '')
-        has_audio = data.get('has_audio', False)
+        # Handle writing tasks (5, 6) differently from speaking tasks (2, 3, 4)
+        is_writing_task = task_num in [5, 6]
 
-        wpm = (word_count / speaking_time * 60) if speaking_time > 0 else 0
+        if is_writing_task:
+            # Writing task data
+            text = data.get('text', '')
+            word_count = data.get('word_count', 0)
+            reading_text = data.get('reading_text', '')
+            discussion_data = data.get('discussion_data', {})
+            transcript = text  # Use same variable name for consistency
+            wpm = 0
+            has_audio = False
+        else:
+            # Speaking task data
+            transcript = data.get('transcript', '')
+            word_count = data.get('word_count', 0)
+            speaking_time = data.get('speaking_time', 0)
+            reading_text = data.get('reading_text', '')
+            has_audio = data.get('has_audio', False)
+            wpm = (word_count / speaking_time * 60) if speaking_time > 0 else 0
 
         # Task-specific prompts
         if task_num == 2:
@@ -1033,35 +1125,54 @@ def evaluate_task(task_num):
         elif task_num == 3:
             task_description = "Academic Concept (Task 3)"
             task_context = "In this task, you read an academic article and listened to a lecture. You needed to explain how the lecture examples illustrate the concept from the reading."
-        else:  # task_num == 4
+        elif task_num == 4:
             task_description = "Lecture Summary (Task 4)"
             task_context = "In this task, you listened to an academic lecture. You needed to summarize the main points presented."
+        elif task_num == 5:
+            task_description = "Integrated Writing (Task 5)"
+            task_context = "In this task, you read an academic passage and listened to a lecture that challenges it. You needed to write an essay (150-225 words) summarizing how the lecture counters the reading's points."
+        else:  # task_num == 6
+            task_description = "Academic Discussion (Task 6)"
+            task_context = f"In this task, you read a professor's question and two student responses. You needed to write your own contribution (at least 100 words) to the academic discussion."
 
         audio_note = ""
-        if not has_audio:
+        if not is_writing_task and not has_audio:
             audio_note = "\n\n**NOTE:** The student did not have access to the audio portion. Focus evaluation on language quality (vocabulary, grammar, phrasing) rather than content accuracy."
 
         reading_context = ""
         if reading_text:
             reading_context = f"\n\n**Reading Passage:**\n{reading_text}"
 
-        prompt = f"""You are an experienced TOEFL speaking evaluator. Evaluate this TOEFL {task_description} response.
+        discussion_context = ""
+        if task_num == 6 and discussion_data:
+            discussion_context = f"\n\n**Discussion Context:**\n"
+            discussion_context += f"Professor ({discussion_data.get('professor_name', 'Professor')}): {discussion_data.get('professor_question', '')}\n"
+            discussion_context += f"Student 1 ({discussion_data.get('student1_name', 'Student 1')}): {discussion_data.get('student1_response', '')}\n"
+            discussion_context += f"Student 2 ({discussion_data.get('student2_name', 'Student 2')}): {discussion_data.get('student2_response', '')}"
 
-**Task Context:** {task_context}{audio_note}{reading_context}
+        task_type = "writing" if is_writing_task else "speaking"
+        prompt = f"""You are an experienced TOEFL {task_type} evaluator. Your MISSION: Help this student achieve the HIGHEST possible TOEFL score by teaching them HIGH-IMPACT vocabulary and expressions that IMPRESS graders.
 
-**Student's Response (transcribed):**
+**CRITICAL FOCUS:** "Low-frequency words" - sophisticated, academic vocabulary that demonstrates advanced proficiency. These are the words that distinguish a score of 3 from a score of 5.{vocab_context}
+
+Evaluate this TOEFL {task_description} response.
+
+**Task Context:** {task_context}{audio_note}{reading_context}{discussion_context}
+
+**Student's Response{"" if is_writing_task else " (transcribed)"}:**
 {transcript}
 
 **Statistics:**
 - Total words: {word_count}
-- Words per minute: {wpm:.1f}
+{f"- Words per minute: {wpm:.1f}" if not is_writing_task else ""}
 
 **Your task:**
 Provide a detailed evaluation following this structure:
 
-1. **Overall Score** (0-4 scale):
-   - Give a score from 0 to 4 (TOEFL scale)
-   - Briefly explain the score
+1. **Overall Score**:
+   - Give TWO scores: (1) TOEFL scale 0-5, (2) Percentage score 0-100
+   - Format: "Score: X/5 (Y/100)"
+   - Briefly explain both scores
 
 2. **Strengths** (What was done well):
    - List 2-3 specific positive points
@@ -1076,20 +1187,23 @@ Provide a detailed evaluation following this structure:
    - Were ideas developed with sufficient detail?
    - Suggest what could have been improved
 
-5. **Language & Vocabulary**:
-   - Identify any repetitive or basic words/phrases used
-   - For EACH word/phrase identified, suggest 3-5 alternative advanced synonyms
-   - Example format: "Instead of 'good', try: beneficial, advantageous, favorable"
-   - Also provide 2-3 REPHRASING examples: show how they could have expressed their ideas better
-   - Format rephrasing as: "You said: '[quote from transcript]' → You could say: '[improved version]'"
-   - Focus on vocabulary that would improve their TOEFL score
+5. **Language & Vocabulary - HIGH-IMPACT FOCUS**:
+   - Identify BASIC or REPETITIVE words/phrases
+   - For EACH word, suggest 3-5 LOW-FREQUENCY alternatives that TOEFL graders value
+   - Prioritize: academic vocabulary, precise verbs, sophisticated connectors, nuanced expressions
+   - Example: Instead of "important", suggest: pivotal, instrumental, paramount, consequential
+   - Provide 2-3 REPHRASING examples with ADVANCED vocabulary
+   - Format: "You said: '[quote]' → Better: '[sophisticated version with low-frequency words]'"
+   - **BONUS:** Suggest 2-3 POWER TRANSITIONS/PHRASES that impress graders (e.g., "Furthermore,", "This exemplifies")
 
 6. **Grammar & Fluency**:
    - Note any grammatical errors (with corrections)
    - Comment on sentence variety and complexity
+   - Suggest ONE advanced grammatical structure they could incorporate next time
 
-7. **Recommendations**:
-   - Give 2-3 specific actionable tips for next time
+7. **Recommendations for Score Improvement**:
+   - Give 2-3 SPECIFIC, ACTIONABLE tactics to boost their score
+   - Focus on what makes the difference between a 3 and a 5
 
 Format your response in clear HTML with the following EXACT structure:
 - Use <h4> tags for EACH section title (Overall Score, Strengths, Areas for Improvement, Content & Development, Language & Vocabulary, Grammar & Fluency, Recommendations)
@@ -1108,10 +1222,11 @@ IMPORTANT:
 - Return only pure HTML content"""
 
         # Call OpenAI API
+        system_message = f"You are an expert TOEFL {task_type} evaluator. Provide detailed, constructive feedback. Do not use any emojis. Return only HTML content without markdown code blocks."
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an expert TOEFL speaking evaluator. Provide detailed, constructive feedback. Do not use any emojis. Return only HTML content without markdown code blocks."},
+                {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
